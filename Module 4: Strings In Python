@@ -1,1 +1,543 @@
+1. Write a program that asks the user to enter a string with spaces. Then print out the
+following:
+ The length of the string
+The second character of the string
+The last character of the string
+The first five characters of the string
+The last two characters of the string
+ Print the string backward direction
+ Every character of the string except the last one
+ Every character of the string except the first and last
+ If the string contains a lowercase a, print out the index of the first a. Otherwise say that there is no lowercase a
+The string in all caps
+The string with every space replaced with an underscore
+
+
+Test case example
+------------------------
+input=arsenal gunner
+output=
+Length: 14
+2nd char: r
+Last char: r
+First 5 chars: arsen
+Last 2 chars: er
+Backwards: rennug lanesra
+All chars except last: arsenal gunne
+All chars except first and last: rsenal gunne
+Index of 1st lowercase a: 0
+All caps: ARSENAL GUNNER
+Replace spaces with underscores: arsenal_gunner
+
+PROGRAM:
+--------------------------------
+s = input()
+print('Length:', len(s))
+print('2nd char:', s[1])
+print('Last char:', s[-1])
+print('First 5 chars:', s[:5])
+print('Last 2 chars:', s[-2:])
+print('Backwards:', s[::-1])
+print('All chars except last:', s[:-1])
+print('All chars except first and last:', s[1:-1])
+if 'a' in s:
+    x = s.index("a")
+    print('Index of 1st lowercase a:',x)
+else:
+    print('No lowercase a')
+print('All caps:', s.upper())
+print('Replace spaces with underscores:', s.replace(' ', '_'))
+
+2. Write a program that asks the user to enter a string, replace all the spaces with # symbol, then replace
+every fifth character with an @ symbol except the first character
+
+TEST CASES:
+-----------------------------
+case = t1
+input=north london is red
+output=
+nort@#lon@on#i@#red
+
+case = t2
+Fail message=OOPS!! Some Test Cases Didn't match your output!!
+input=arun arsenal
+output=
+arun@arse@al
+
+case = t3
+input=arunck
+output=arun@k
+
+PROGRAM:
+---------------------------
+"""
+s = input()
+s = s.replace(' ', '#')
+t = s[0]
+for i in range(1,len(s)):
+    if i % 5 == 0:
+        t += '@'
+    else:
+        t += s[i]
+print(t)
+"""
+
+s = input()
+s = s.replace(' ', '#')
+t = s[0:4]
+j=4;
+t=t+'@'+s[5]
+for i in range(6,len(s)):
+    if i == j+5:
+        t += '@'
+        j=j+5
+    else:
+        t += s[i]
+print(t)
+
+3. Write a program that asks the user to enter a string, If string contains atleast 10 characters, then
+print the 1st 5 characters with 3 asterisk symbols. else add enough $ symbols to the string so that total length of the string becomes 10.
+
+TESTCASES:
+------------------------
+case = t1
+input=gunner forever
+output=
+gunne***
+
+case = t2
+Fail message=OOPS!! Some Test Cases Didn't match your output!!
+input=arsenal
+output=
+arsenal$$$
+
+PROGRAM:
+---------------------------------
+s = input()
+if len(s) >= 10:   
+t = s[:5] + '***'
+else:    
+t = s + '$' * (10-len(s))
+print(t)
+
+4. Write a program that asks the user to enter their name in lowercase (without spaces) and replace each character
+of their name with the letter immediately following it in the alphabet.
+
+TESTCASES:
+------------------------
+case = t1
+input=arunkumar
+output=bsvolvnbs
+
+case = t2
+Fail message=OOPS!! Some Test Cases Didn't match your output!!
+input=arsenal
+output=bstfobm
+
+case=t3
+input=mumtaz
+output=nvnuba
+
+PROGRAM:
+----------------------
+alpha = 'abcdefghijklmnopqrstuvwxyz'
+name = input()
+new_name = ''
+for c in name:
+    location = alpha.index(c)
+    new_name += alpha[(location+1) % 26]
+print(new_name)
+
+5. Lets say we have email address arunck@grietcollege.com. Write a python program to print the name of the domain.
+TESTCASES:
+--------------------
+case=1
+input=john@google.com
+output=google
+
+case=t2
+input=ack@google.com
+output=google
+
+case=t3
+Fail message=OOPS!! Some Test Cases Didn't match your output!!
+input=arsenal@gmail.com
+output=gmail
+
+
+PROGRAM:
+-------------------------
+import re
+a=input()
+pat="@([a-zA-z0-9]+)"
+x=re.findall(pat,a)
+#print(x)
+for i in x:
+    print(i)
+    
+6. Write a program that asks the user to enter a string and prints out how many alphabets (uppercase and
+lowercase) are in the string.
+
+TEST CASES:
+-----------------------
+case=t1
+Fail message=OOPS!! Some Test Cases didn't match your output
+input=GUNNER@ARSENAL38
+output=
+No of alphabets:13
+
+case=t2
+input=GRIET@123
+output=
+No of alphabets:5
+
+PROGRAM:
+-------------------------------
+import re
+s = input()    
+count = 0
+#res = len([ele for ele in s if ele.isalpha()])
+cnt = len(re.findall('[a-zA-Z]', s))
+for c in s:
+    if c.isalpha():
+        count += 1
+print('No. of alphabets:', count)
+#print('No.of alphabets:',res)
+#print('No.of alphabets:',cnt)
+
+7. Write a program that asks the user to enter an integer n. Then produce output that changes one letter
+at a time from a string of all As to a string of all Bs, starting at the back of the string. Shown below is
+the output with n = 4.
+AAAA
+AAAB
+AABB
+ABBB
+BBBB
+
+TEST CASES:
+------------------------
+case=1
+input=5
+output=
+AAAAA
+AAAAB
+AAABB
+AABBB
+ABBBB
+BBBBB
+
+case=t2
+Fail message=OOPS!! Some Test Cases Didn't match your output!!
+input=6
+output=
+AAAAAA
+AAAAAB
+AAAABB
+AAABBB
+AABBBB
+ABBBBB
+BBBBBB
+
+PROGRAM:
+-----------------------------
+n = eval(input())
+for i in range(n+1):
+    print('A'*(n-i) + 'B'*i)
+
+8. Write a program that asks the user to enter two strings. If the strings have different lengths, then print
+out a message strings are not in same length. Otherwise, print out whether or not the strings differ in exactly one
+position. else print strings don't differ in as many positions accordingly. 
+For example, ARSENAL and ARSANAL differ in exactly one position at index 3.
+
+TESTCASES:
+-------------------------
+case=t1
+input=GRIET
+GRIAT
+output=
+strings differ in exactly one position at index 3
+
+case=t2
+Fail message=OOPS!! Some Test Cases Didn't match your output!!
+input=GRIET
+PYTHON
+output=
+strings are not in same length
+
+case=t3
+Fail message=OOPS!! Some Test Cases Didn't match your output!!
+input=ABCDEF
+GHIJKL
+output=
+strings differ in 6 positions
+
+case=t4
+input=GRIET
+GREAT
+output=
+strings differ in 2 positions
+
+PROGRAM:
+-------------------------------
+s1 = input()
+s2 = input()
+if len(s1)!= len(s2):
+    print('strings are not in same length')
+else:
+    count = 0
+    flag=0
+    for i in range(len(s1)):
+        if s1[i]!=s2[i]:
+            count += 1
+            flag=i
+    if count == 1:
+        print('strings differ in exactly one position at index {}'.format(flag))
+    else:
+        print('strings differ in {} positions'.format(count))
+
+9. Write a program that asks the user to enter two strings. Print out whether or not the first string
+contains any characters that are not in the second string.
+
+TESTCASES:
+------------------------
+case=t1
+input=HEART
+EARTH
+output=
+every character of first string is also in the second string
+
+case=t2
+input=GRIET PYTHON
+GRIET
+output=
+first string has some characters which are not there in second string 
+
+case=t3
+Fail message=OOPS!! Some Test Cases Didn't match your output!!
+input=CARE
+RACE
+output=every character of first string is also in the second string
+
+case=t4
+input=FRIED
+FIRED
+output=every character of first string is also in the second string
+
+PROGRAM:
+---------------------------------
+s1 = input()
+s2 = input()
+flag = False
+for c in s1:
+    if c not in s2:
+        flag = True
+if flag:
+    print('first string has some characters which are not there in second string.')
+else:
+    print('every character of first string is also in the second string.')
+
+
+10. IP addresses are important in computer networking. They consist of four numbers, each from 0 to
+255, separated by dots. For example ip address of griet moodle is 172.16.105.103.  
+
+Write a program that asks the user to enter an IP address and prints out whether it is in one of the following forms:
+172.*.*.* and 192.168.*.*. #The stars can stand for any values from 0 to 255. 
+
+if its one of the above form: print the message: valid ip address or else print invalid ip address
+
+TESTCASES:
+----------------------
+case=t1
+input=192.168.12.203
+output=
+valid ip address
+
+case=t2
+input=192.168.*.203
+output=
+valid ip address 
+
+case=t3
+Fail message=OOPS!! Some Test Cases Didn't match your output!!
+input=176.2.12.201
+output=invalid ip address
+
+case=t4
+Fail message=OOPS!! Some Test Cases Didn't match your output!!
+input=192.172.68.123
+output=invalid ip address
+
+PROGRAM:
+-----------------------------
+s = input()
+if s.startswith('192.168.') or s.startswith('172.'):
+    print('valid ip address')
+else:
+    print('invalid ip address')
+
+11. Write a python program to read name of user(first name and last name) along with age on the same line using split method.
+Note: only 2 variable need to be used to store the name and age. Explore join function in python strings before solving
+
+TEST CASES:
+-------------------------
+case=t1
+input=ARJUN KUMAR 32
+output= Entered Name is: ARJUN KUMAR and age is: 32
+
+case=t2
+Fail Message=Output Didn't match!!
+input=VIRAT KOHLI 34
+output= Entered Name is: VIRAT KOHLI and age is: 34
+
+case=t3
+input=RUSHI SAMEER PADOLE 2
+output= Entered Name is: RUSHI SAMEER PADOLE and age is: 2
+
+case=t4
+input=VEENA VARUN KASHYAP 26
+output= Entered Name is: VEENA VARUN KASHYAP and age is: 26
+
+PROGRAM:
+--------------------------------------
+*x,y=input().split()
+x=(' '.join(x))
+print("Entered Name is: {} and age is: {}".format(x,y))
+
+12. Write a Python Program to Count Alphabets, numbers and any Special Characters in a String 𝐔𝐬𝐢𝐧𝐠 𝐨𝐧𝐥𝐲 𝐅𝐨𝐫 𝐋𝐨𝐨𝐩
+
+TESTCASES:
+----------------------
+case=t1
+input=ARUN KUMAR@grietcollege.CSE_1661
+output=Alphabets: 24
+Numbers: 4
+Special Characters: 4
+
+case=t1
+Fail Message=OOPS!!!Some Test Case Didn't Match Guys. Read Question Carefully and Come Again. Cheers!!
+input=Arsenal@1234
+output=Alphabets:7
+Numbers:4
+Special Characters:1
+
+PROGRAM:
+-----------------------------------
+string = input()
+alphabets = digits = special = 0
+for i in range(len(string)):
+    if(string[i].isalpha()):
+        alphabets = alphabets + 1
+    elif(string[i].isdigit=()):
+        digits = digits + 1
+    else:
+        special = special + 1
+        
+print("Alphabets:",alphabets)
+print("Numbers:",digits)
+print("Special Characters:",special)
+
+13. write a program to input a String from user and prints the string in Camel Case.
+
+TESTCASES:
+----------------------------------
+case=t1
+input=hello friend
+output="HelloFriend"
+
+case=t2
+Fail Message=OOPS!!!Some Test Case Didn't Match Guys. Read Question Carefully and Come Again. Cheers!!
+input=insert delete
+output="InsertDelete"
+
+case=t3
+input=there are two ways to LIVE
+output="ThereAreTwoWaysToLive"
+
+case=t4
+input=Programmer 4 liFE
+output="Programmer4Life"
+
+PROGRAM:
+-------------------------------
+def camel_Print(my_string):
+    lis=[]
+    lis=my_string.split()
+    my_string2=''
+    for i in range(len(lis)):
+         dummy=lis[i]
+         dummy=dummy.capitalize()
+         my_string2=my_string2+dummy
+    print(my_string2)
+    
+
+str=input()
+camel_Print(str)
+
+14. write a program to input a String from user and prints the longest word
+
+TESTCASES:
+----------------------
+case=t1
+input=PHP, Java, Python
+output=Python
+
+case=t2
+Fail Message=OOPS!!!Some Test Case Didn't Match. Read Question Carefully and Come Again. Cheers!!
+input=Insert, Delete, Duplicate, Remove, Append  
+output=Duplicate
+
+case=t3
+input=Tea, Coffee, Milk, Juice
+output=Coffee
+
+case=t4
+input=Programmer, Coder
+output=Programmer
+
+PROGRAM:
+------------------------------------
+def find_longest_word(words_list):
+    word_len = []
+    for n in words_list:
+        word_len.append((len(n), n))
+        word_len.sort()
+    print(word_len)    
+    return word_len[-1][1]
+sentence=list(input().split(",")) 
+print(find_longest_word(sentence))
+
+15. Write a program to find the last position of a substring in a given string.
+
+TEST CASES:
+---------------------------
+case=t1
+input=Emma is a data scientist who knows Python. Emma works at google.
+Emma
+output=The last position of 'Emma' is at index 43
+
+case=t2
+fail message="OOPs!!! Something went wrong"
+input=Hello, how are you? I hope you are doing well.
+you
+output=The last position of 'you' is at index 27
+
+case=t3
+input=This is a test string.Test the string to test its validity.
+test
+output=The last position of 'test' is at index 41
+
+case=t4
+input=The quick brown fox jumped over the lazy dog.
+cat
+output='cat' was not found in the given string.
+
+PROGRAM:
+----------------------------
+str1 = input()
+substr=input()
+index = str1.rfind(substr)
+if(index>=0):
+    print("The last position of \'{}\' is at index:{}".format(substr,index))
+else:
+    print("\'{}\' was not found in the given String".format(substr))
 
