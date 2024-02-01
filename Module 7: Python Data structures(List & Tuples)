@@ -1,1 +1,1171 @@
+1. Write a program that asks the user to enter a list of at least five integers. Do the following:
+(a)	Print out the total number of items in the list.
+(b)	Print out the fourth item (index 3) in the list.
+(c)	Print out the last three items in the list.
+(d)	Print out all the items in the list except the first two.
+(e)	Print out the list in reverse order.
+(f)	Print out the largest and smallest values in the list.
+(g)	Print out the sum of all the values in the list.
+(h)	If the list contains a zero, print out the index of the first zero in the list, and otherwise print out a message saying there are no zeroes.
+(i)	Sort the list and print out the list after sorting.
+(j)	Delete the first item from the (now sorted) list and print out the new list.
+(k)	Change the second-to-last item in the list to 9876 and print out the new list.
+(l)	Append the value -500 to the end of the list and print out the new list.
+
+TEST CASES:
+---------------------------
+case=t1
+input=20,10,50,40,30
+output=
+(a) Number of items: 5
+(b) Fourth item: 40
+(c) Last 3 items: (50, 40, 30)
+(d) Everything except first two items: (50, 40, 30)
+(e) Reversed: (30, 40, 50, 10, 20)
+(f) Largest: 50 Smallest: 10
+(g) Sum: 150
+(h) No zeroes in the list.
+(i) Now sorted: [10, 20, 30, 40, 50]
+(j) After deleting first item: [20, 30, 40, 50]
+(k) After changing second-to-last item: [20, 30, 9876, 50]
+(l) After appending -500 to list: [20, 30, 9876, 50, -500]
+
+case=t2
+input=6,1,8,5,6,4,3
+output=
+(a) Number of items: 7
+(b) Fourth item: 5
+(c) Last 3 items: (6, 4, 3)
+(d) Everything except first two items: (8, 5, 6, 4, 3)
+(e) Reversed: (3, 4, 6, 5, 8, 1, 6)
+(f) Largest: 8 Smallest: 1
+(g) Sum: 33
+(h) No zeroes in the list.
+(i) Now sorted: [1, 3, 4, 5, 6, 6, 8]
+(j) After deleting first item: [3, 4, 5, 6, 6, 8]
+(k) After changing second-to-last item: [3, 4, 5, 6, 9876, 8]
+(l) After appending -500 to list: [3, 4, 5, 6, 9876, 8, -500]
+
+case=t3
+input=-1,0,5,6,7,8
+output=
+(a) Number of items: 6
+(b) Fourth item: 6
+(c) Last 3 items: (6, 7, 8)
+(d) Everything except first two items: (5, 6, 7, 8)
+(e) Reversed: (8, 7, 6, 5, 0, -1)
+(f) Largest: 8 Smallest: -1
+(g) Sum: 25
+(h) First zero is at: 1
+(i) Now sorted: [-1, 0, 5, 6, 7, 8]
+(j) After deleting first item: [0, 5, 6, 7, 8]
+(k) After changing second-to-last item: [0, 5, 6, 9876, 8]
+(l) After appending -500 to list: [0, 5, 6, 9876, 8, -500]
+
+
+PROGRAM:
+--------------------------------
+L = eval(input()) # converts input to tuples
+#L=input().split(",")
+print(type(L))
+print('(a) Number of items:', len(L))
+print('(b) Fourth item:', L[3])
+print('(c) Last 3 items:', L[-3:])
+print('(d) Everything except first two items:', L[2:])
+print('(e) Reversed:', L[::-1])
+print('(f) Largest:', max(L),'Smallest:', min(L))
+print('(g) Sum:', sum(L))
+if 0 in L:
+    print('(h) First zero is at:', L.index(0))
+else:
+    print('(h) No zeroes in the list.')
+L=list(L)
+L.sort()
+print('(i) Now sorted:', L)
+del L[0]
+print('(j) After deleting first item:', L)
+L[-2] = 9876
+print('(k) After changing second-to-last item:', L)
+L.append(-500)
+print('(l) After appending -500 to list:', L)
+
+
+2. Write a program that asks the user to enter a list of numbers with some of the values greater than 10. 
+Print out the smallest item in the list that is larger than 10
+
+TEST CASES:
+---------------------------------
+case=t1
+input=45,67,34,78,90,345,890
+output=Smallest number greater than 10 is: 34
+
+case=t2
+input=12,40,60,12,67,30,89,-1,78,90
+output=Smallest number greater than 10 is: 12
+
+case=t3
+input=0,0,0,0,0,1,0,0,1,1,45,600
+output=Smallest number greater than 10 is: 45
+
+case=t1
+input=10,10,10,10,10,20,20,10,20,10
+output=Smallest number greater than 10 is: 20
+
+PROGRAM:
+----------------------------------
+L = eval(input())
+
+smallest = max(L)
+for x in L:
+    if 10 < x < smallest:
+        smallest = x
+print('Smallest number greater than 10 is:', smallest)
+
+3. Write a program that asks the user to enter two lists of the same length. 
+Then create a new list where the entry at each index i in the new list is the larger of the entries at index i of the user’s two lists. 
+For instance, if the two lists are [1,25,3] and [18,2,30], then new list would be [18,25,30].
+
+TEST CASES:
+----------------------------
+case=t1
+input=67,88,12,56,78
+34,89,123,345,909
+output=[67, 89, 123, 345, 909]
+
+case=t2
+Fail message="hidden test case"
+input=56,1,2,89,45,9
+90,1,67,2,78,100
+output=[90, 1, 67, 89, 78, 100]
+
+case=t3
+input=12,25,89,36,50
+34,67,23,34,90
+output=[34, 67, 89, 36, 90]
+
+case=t4
+input=12,25,12,12,25
+25,12,25,25,12
+output=[25, 25, 25, 25, 25]
+
+case=t5
+Fail message="OOPs!! same element?"
+input=12,12,12,12,12
+12,12,12,12,12
+output=[12, 12, 12, 12, 12]
+
+PROGRAM:
+-------------------------------
+L = eval(input())
+M = eval(input())
+N = []
+for i in range(len(L)):
+    if L[i] > M[i]:
+        N.append(L[i])
+    else:
+        N.append(M[i])
+print(N)-
+
+4. Write a program that asks the user to enter two lists of the same size.
+Then put the lists together into a new list by alternately taking items from the two lists, like in a riffle shuffle. 
+For instance, if one list is [1,2, 3] and the other is [7,8, 9], the new list would be [1,7, 2, 8, 3, 9].
+
+TEST CASES:
+-------------------------
+case=t1
+input=2,1,56,78,1,234,567,90
+1,5,6,7,34,89,123,890
+output=[2, 1, 1, 5, 56, 6, 78, 7, 1, 34, 234, 89, 567, 123, 90, 890]
+
+
+case=t2
+input=1,2,3,4,5
+6,7,8,9,1
+output=[1, 6, 2, 7, 3, 8, 4, 9, 5, 1]
+
+case=t3
+Fail message="General Hidden valid test case"
+input=4,3,7,9
+3,1,2,0
+output=[4, 3, 3, 1, 7, 2, 9, 0]
+
+PROGRAM:
+-------------------------------
+L = eval(input())
+M = eval(input())
+N = []
+for i in range(len(L)):
+    N.append(L[i])
+    N.append(M[i])
+print(N)
+
+5. Write a program that rotates all the elements in a list one element to the left, with the first element rotating to the end.
+For instance, if the list is [1,2,3,4], it would rotate into [2,3,4,1].
+
+TEST CASES:
+--------------------------
+case=t1
+input=1,2,3,4,5
+output=[2, 3, 4, 5, 1]
+
+case=t2
+Fail message="General hidden test case"
+input=4,5,6,7,8,1,2,378,1
+output=[5, 6, 7, 8, 1, 2, 378, 1, 4]
+
+case=t3
+input=0,1,56,3,12,56
+output=[1, 56, 3, 12, 56, 0]
+
+PROGRAM:
+-----------------------------------
+L = eval(input())
+L=list(L)
+save = L[0]
+for i in range(len(L)-1):
+    L[i] = L[i+1]
+L[-1] = save
+print(L)
+
+6. Write a program that asks the user to enter a list of strings and a list of indices. 
+Then create a new list that consists of all the strings from the user’s list except for those at the indices from the list of indices. 
+For instance, if the list of strings is ['a','bc','d','e','fg'] and the list of indices is [2,4], then the new list would be ['a','bc','e'].
+
+TEST CASES:
+-----------------------------------------
+case=t1
+input=RCB,GUNNER,ARSENAL,KOHLI,SAKA
+3,5
+output=index out of range
+
+case=t2
+input=arun,rcb,gunner,arsenal,saka
+2,4
+output=['arun', 'rcb', 'arsenal']
+
+case=t3
+input=1,2,3,4,5,6,7
+3,5
+output=['1', '2', '3', '5', '7']
+
+case=t4
+Fail message="general hidden test case"
+input=a,b,c,d,e,f
+0,4
+output=['b', 'c', 'd', 'f']
+
+PROGRAM:
+--------------------------------
+L = input().split(',')
+M  = input().split(',')
+M = [int(index) for index in M]
+if any(index<0 or index>= len(L) for index in M):
+        print("Index out of range")
+else:
+    new_list = [L[i] for i in range(len(L)) if i not in M]
+    print(new_list)
+
+7. Count the number of strings where the string length is 2 or more  and the first and last character are same from a given list of strings. 
+  
+  Input Format: Read number of strings as 'n' and read strings one by one.. (you can use combination of maps and lambda functions)
+  Output conditions: If any string length is less than 2 print error message as for example: "String 'A' has length less than 2."
+                     and print the count of remaining strings which match the first and last characters.
+TEST CASES:
+------------------------------
+case=t1
+input=5
+mom
+madam
+go deliver a vile dog
+121
+arun
+output=count=4
+
+case=t2
+input=5
+1221
+Arun
+A
+B
+mom
+output=String 'A' has length less than 2.
+String 'B' has length less than 2.
+count=2
+
+case=t3
+Fail message="general hidden test case"
+input=5
+1221
+1
+2
+1
+45
+output=String '1' has length less than 2.
+String '2' has length less than 2.
+String '1' has length less than 2.
+count=1
+
+PROGRAM:
+----------------------------------
+n = int(input())
+words = list(map(lambda i: input(), range(n)))
+ctr = 0
+for word in words:
+    if len(word) < 2:
+            print("String '"+ word +"' has length less than 2.")
+            #print("String '{}' has length less than 2.".format(word))
+    elif word[0] == word[-1]:
+      ctr += 1
+  
+print("count=",ctr)
+
+8. 	Write a Python program to calculate the difference between the two lists.
+
+TEST CASES:
+--------------------
+case=t1
+input=1 1 2 2 3
+1 2 4 5 3
+output=
+difference between two lists:  [4, 5]
+
+case=t2
+Fail Message="Test Case didn't match"
+input=2 0 1 5 78 3 5 6 1 2 3 4 
+6 8 3 2 5 90 1 45 67 0 1
+output=difference between two lists:  [78, 4, 8, 90, 45, 67]
+
+case=t3
+input=10 20 30 50 40
+3 40 10 70 30
+output=difference between two lists:  [20, 50, 3, 70]
+
+
+PROGRAM:
+-------------------------------
+List1 = list(map(int,input().split()))
+list2 = list(map(int,input().split()))
+new_list1 = [] 
+for i in List1:
+	if i not in list2:
+		new_list1.append(i)
+
+for i in list2:
+	if i not in List1:
+		new_list1.append(i)
+print("difference between two lists: ",new_list1) 
+
+9. Write a Python program to remove and print every third number from a list of numbers until the list becomes empty.
+
+TEST CASES:
+-------------------------
+case=t1
+input=10 40 20 30 5 32 51
+output=
+"20 ['10', '40', '30', '5', '32', '51']
+32 ['10', '40', '30', '5', '51']
+40 ['10', '30', '5', '51']
+51 ['10', '30', '5']
+5 ['10', '30']
+10 ['30']
+30 []"
+
+case=t2
+input=10 20 30 40 50 60 70 80 90
+output=
+"30 ['10', '20', '40', '50', '60', '70', '80', '90']
+60 ['10', '20', '40', '50', '70', '80', '90']
+90 ['10', '20', '40', '50', '70', '80']
+40 ['10', '20', '50', '70', '80']
+80 ['10', '20', '50', '70']
+50 ['10', '20', '70']
+20 ['10', '70']
+70 ['10']
+10 []"
+
+PROGRAMING
+--------------------
+def remove_nums(int_list):
+  #list starts with 0 index
+  position = 2
+  idx = 0
+  len_list = (len(int_list))
+  while len_list>0:
+    idx = (position+idx)%len_list
+    print(int_list.pop(idx),end=" ")
+    print(int_list)
+    len_list -= 1
+nums =list(input().split( ))
+remove_nums(nums)
+
+10. Write a Python program to replace the last value of tuples in a list.
+Sample list: [(10, 20, 40), (40, 50, 60), (70, 80, 90)]
+Expected Output: [(10, 20, 100), (40, 50, 100), (70, 80, 100)]
+
+TEST CASES:
+-------------------------
+case=t1
+input=(10,20,30),(40,50,60),(70,80,90)
+100
+output=[(10,20,30),(40,50,60),(70,80,90)]
+Modified list of tuples:
+[(10, 20, 100), (40, 50, 100), (70, 80, 100)]
+
+case=t2
+input=(14,16,20),(16,22,42),(15,25,45),(12,24,36)
+50
+output=[(14, 16, 20),(16, 22, 42),(15, 25, 45), (12, 24, 36)]
+Modified list of tuples:
+[(14, 16, 50),(16, 22, 50),(15, 25, 50),(12, 24, 50)]
+
+case=t3
+fail message="Hidden Test Case"
+input=(4,6,20),(31,16,22),(42,51,15),(25,45,65),(72,88,91)
+10
+output=[(4, 6, 20),(31, 16, 22),(42, 51, 15),(25, 45, 65),(72, 88, 91)]
+Modified list of tuples:
+[(4, 6, 10),(31, 16, 10),(42, 51, 10),(25, 45, 10),(72, 88, 10)]
+
+PROGRAM:
+---------------------------
+import ast
+try:
+    tuple_list = ast.literal_eval(input())
+except (SyntaxError, ValueError):
+    print("Invalid input format. Please provide a valid list of tuples.")    
+r_value=int(input())
+print(tuple_list)
+updated_list = [(t[0], t[1], r_value) for t in tuple_list]
+
+# Print the updated list
+print("Modified list of tuples:")
+print(updated_list)
+
+11. Write a Python program to convert a tuple of string values to a tuple of integer values.
+Original tuple values:
+(('333', '33'), ('1416', '55'))
+New tuple values:
+((333, 33), (1416, 55))
+
+TEST CASES:
+------------------------
+case=t1
+input=(333,33),(1416,55)
+output=
+Original tuple values:
+(('333', '33'), ('1416', '55'))
+New tuple values:
+((333, 33), (1416, 55))
+
+case=t2
+fail message="Invalid test case."
+input=(123,154,112),(56,79,81),(12,15,61)
+output=
+Original tuple values:
+(('123', '154', '112'), ('56', '79', '81'), ('12', '15', '61'))
+New tuple values:
+((123, 154), (56, 79), (12, 15))
+
+
+case=t3
+input=(abc,124,xyz),(15,20,25)
+output="Original tuple values:
+(('abc', '124', 'xyz'), ('15', '20', '25'))
+New tuple values:
+Invalid input format. Please provide a valid list of tuples."
+
+PROGRAM:
+--------------------------
+def tuple_int_str(tuple_str):
+    try:
+        result = tuple((int(x[0]), int(x[1])) for x in tuple_str)
+        return result
+    except (SyntaxError, ValueError):
+        print("Invalid input format. Please provide a valid list of tuples.")
+        exit()
+        
+#tuple_str =  (('333', '33'), ('1416', '55'))
+input_string = input()
+
+# Parse the input string into a nested tuple
+# Assuming the input format is like "('333', '33'), ('1416', '55')"
+# You can remove the spaces and split it into individual tuples
+input_string = input_string.replace(" ", "")  # Remove spaces
+input_string = input_string.split("),")  # Split at '),'
+input_string = [t.strip("()") for t in input_string]  # Remove parentheses
+
+# Create a list of tuples
+input_list = [tuple(t.split(",")) for t in input_string]
+
+# Convert the list of tuples into a nested tuple
+tuple_str = tuple(input_list)
+
+print("Original tuple values:")
+print(tuple_str)
+print("New tuple values:")
+print(tuple_int_str(tuple_str))
+
+12.   Write a Python program to count the elements in a list until an element is a tuple
+
+TEST CASES:
+-----------------------
+case=t1
+input=10,20,30,(40, 50, 60)
+output=3
+
+case=t2
+fail message="Hidden test case"
+input=12,24 ,(1 2 3), 56
+output=2
+
+case=t3
+input=1, 2, 3, 4, 5, 6, (10 12 15), 9, 11
+output=6
+
+PROGRAM:
+-------------------------
+num = input().split(',')
+
+#print(num)
+    
+ctr = 0
+for element in num:
+    if element.strip().startswith('('):
+        break
+    ctr += 1
+print(ctr)    
+
+13. Write a Python program to convert a given string list to a tuple.
+
+TEST CASES:
+-----------------------
+case=t1
+input=python 3.0
+output=Original string: python 3.0
+<class 'str'>
+Convert the said string to a tuple of words:
+('python','3.0')
+<class 'tuple'>
+
+case=t2
+input=Training is meant for learning and practice
+output=Original string: Training is meant for learning and practice
+<class 'str'>
+Convert the said string to a tuple of words:
+('Training', 'is', 'meant', 'for', 'learning', 'and', 'practice')
+<class 'tuple'>
+
+case=t3
+fail message="Hidden test case"
+input=All the Best
+output=Original string: All the Best
+<class 'str'>
+Convert the said string to a tuple of words:
+('All', 'the', 'Best')
+<class 'tuple'>
+
+PROGRAM:
+------------------------------
+str1 =input()
+words = str1.split()
+word_tuple = tuple(words)
+#print(word_tuple)
+print("Original string:",end=" ")
+print(str1)
+print(type(str1))
+print("Convert the said string to a tuple of words:")
+print(word_tuple)
+print(type(word_tuple))
+
+
+14. Write a Python program to calculate the average value of the numbers in a given tuple of tuples.
+Original Tuple:
+((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))
+Average value of the numbers of the said tuple of tuples:
+[30.5, 34.25, 27.0, 23.25]
+Original Tuple:
+((1, 1, -5), (30, -15, 56), (81, -60, -39), (-10, 2, 3))
+Average value of the numbers of the said tuple of tuples:
+[25.5, -18.0, 3.75]
+
+TEST CASES:
+--------------------------------
+case=t1
+input=(10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4)
+output=Original Tuple:((10, 10, 10, 12), (30, 45, 56, 45), (81, 80, 39, 32), (1, 2, 3, 4))
+Average value of the numbers of the said tuple of tuples:[10.5, 44.0, 58.0, 2.5]
+
+case=t2
+input=(1, 1, -5), (30, -15, 56), (81, -60, -39), (-10, 2, 3)
+output=Original Tuple:
+((1, 1, -5), (30, -15, 56), (81, -60, -39), (-10, 2, 3))
+Average value of the numbers of the said tuple of tuples:[-1.0, 23.67, -6.0, -1.67]
+
+case=t3
+fail message=
+input=(-2,10,6,-5),(0,3,5,21),(12,15,19)
+output=Original Tuple:  ((-2, 10, 6, -5), (0, 3, 5, 21), (12, 15, 19))
+Average value of the numbers of the said tuple of tuples: [2.25, 7.25, 15.33]
+
+
+PROGRAM:
+--------------------------
+def average_tuple(nums):
+    result = [round(sum(x) / len(x),2) for x in nums]
+    return result
+
+import ast
+try:
+    nums = ast.literal_eval(input())
+except (SyntaxError, ValueError):
+    print("Invalid input format. Please provide a valid list of tuples.")    
+
+print ("Original Tuple: ",nums)
+print("Average value of the numbers of the said tuple of tuples:",average_tuple(nums))
+
+15. 	Write a Python program to convert a given tuple of positive integers into an integer.
+Original tuple:
+(1, 2, 3)
+Convert the said tuple of positive integers into an integer:
+123
+Original tuple:
+(10, 20, 40, 5, 70)
+Convert the said tuple of positive integers into an integer:
+102040570
+
+TEST CASES:
+-------------------------
+case=t1
+input=10 20 30 40 5 70
+output=Original tuple:
+('10', '20', '30','40', '5', '70')
+Convert the said tuple of positive integers into an integer:
+10203040570
+
+
+case=t2
+fail message="Hidden Test case"
+input=1 2 3
+output=Original tuple:
+('1', '2', '3')
+Convert the said tuple of positive integers into an integer:
+123
+
+case=t3
+input=a 23 c
+output=Original tuple:
+('a', '23', 'c')
+Convert the said tuple of positive integers into an integer:
+Invalid input format. Please provide a valid list of tuples.
+
+PROGRAM:
+------------------------------------
+def tuple_to_int(nums):
+    try:
+        result = int(''.join(map(str,nums)))
+        return result
+    except (SyntaxError, ValueError):
+        print("Invalid input format. Please provide a valid list of tuples.") 
+        exit()
+nums = tuple(input().split())
+print("Original tuple: ") 
+print(nums)
+print("Convert the said tuple of positive integers into an integer:")
+print(tuple_to_int(nums))
+
+16. Write a Python program to check if a specified element appears in a tuple of tuples.
+Original list:
+(('Red', 'White', 'Blue'), ('Green', 'Pink', 'Purple'), ('Orange', 'Yellow', 'Lime'))
+
+
+Check if White present in said tuple of tuples!
+True
+
+TEST CASES:
+-------------------------------
+case=t1
+fail message="Invalid input"
+input=White
+output="Is White present in said tuple of tuples!: Yes"
+
+case=t2
+input=Olive
+output="Is Olive present in said tuple of tuples!: No"
+
+case=t3
+input=Green
+output="Is Green present in said tuple of tuples!: Yes"
+
+case=t4
+input=Teal Green
+output="Is Teal Green present in said tuple of tuples!: No"
+
+case=t5
+input=Blue
+output="Is Blue present in said tuple of tuples!: Yes"
+
+PROGRAM:
+--------------------------
+def check_in_tuples(colors, c):
+    result = any(c in tu for tu in colors)
+    return result
+
+colors = (
+    ('Red', 'White', 'Blue'),
+    ('Green', 'Pink', 'Purple'),
+    ('Orange', 'Yellow', 'Lime'),
+)
+#print("Original list:")
+#print(colors)
+c1 = input()
+print("Is",c1,"present in said tuple of tuples!:",end=" ")
+if(check_in_tuples(colors, c1)):
+    print("Yes")
+else:
+    print("No")
+
+17.  Write a Python program to compute the sum of all the elements of each tuple stored inside a list of tuples.
+Original list of tuples:
+[(1, 2), (2, 3), (3, 4)]
+Sum of all the elements of each tuple stored inside the said list of tuples:
+[3, 5, 7]
+Original list of tuples:
+[(1, 2, 6), (2, 3, -6), (3, 4), (2, 2, 2, 2)]
+Sum of all the elements of each tuple stored inside the said list of tuples:
+[9, -1, 7, 8]
+
+TEST CASES:
+--------------------------
+case=t1
+fail message=
+input=(10, 20, 60), (12, 13, -6), (23, 34), (20, 20, -20, 20)
+output=Original list of tuples:
+[(10, 20, 60), (12, 13, -6), (23, 34), (20, 20, -20, 20)]
+Sum of all the elements of each tuple stored inside the said list of tuples:
+[90, 19, 57,40]
+
+case=t2
+input=(1, 2), (2, 3), (3, 4)
+output=Original list of tuples:
+[(1, 2), (2, 3), (3, 4)]
+Sum of all the elements of each tuple stored inside the said list of tuples:
+[3, 5, 7]
+
+case=t3
+input=(1, 2, 6), (2, 3, -6), (3, 4), (2, 2, 2, 2)
+output=Original list of tuples:
+[(1, 2, 6), (2, 3, -6), (3, 4), (2, 2, 2, 2)]
+Sum of all the elements of each tuple stored inside the said list of tuples:
+[9, -1, 7, 8]
+
+PROGRAM:
+--------------------------
+def test(lst):
+    result =  map(sum, lst)
+    return list(result)
+
+
+nums=input()
+n_list=list(eval(nums))
+print("Original list of tuples:")
+print(n_list)
+print("\nSum of all the elements of each tuple stored inside the said list of tuples:")
+print(test(n_list))
+
+18. '''	  Write a Python program to convert a given list of tuples to a list of lists.
+Original list of tuples: [(1, 2), (2, 3), (3, 4)]
+Convert the said list of tuples to a list of lists: [[1, 2], [2, 3], [3, 4]]
+Original list of tuples: [(1, 2), (2, 3, 5), (3, 4), (2, 3, 4, 2)]
+Convert the said list of tuples to a list of lists: [[1, 2], [2, 3, 5], [3, 4], [2, 3, 4, 2]]
+
+TEST CASES:
+-------------------------
+case=t1
+fail message="Hidden Test Cases"
+input=(1, 2), (2, 3), (3, 4)
+output=Original list of tuples: [(1, 2), (2, 3), (3, 4)]
+Convert the said list of tuples to a list of lists: [[1, 2], [2, 3], [3, 4]]
+
+case=t2
+input=(1, 2), (2, 3, 5), (3, 4), (2, 3, 4, 2)
+output=Original list of tuples: [(1, 2), (2, 3, 5), (3, 4), (2, 3, 4, 2)]
+Convert the said list of tuples to a list of lists: [[1, 2], [2, 3, 5], [3, 4], [2, 3, 4, 2]]
+
+case=t3
+input=(11, 22), (12, 33, 56), (35, 49), (15, 33, 45, 26)
+output=Original list of tuples: [(11, 22), (12, 33, 56), (35, 49), (15, 33, 45, 26)]
+Convert the said list of tuples to a list of lists: [[11, 22], [12, 33, 56], [35, 49], [15, 33, 45, 26]]
+
+PROGRAM:
+------------------------------
+import ast
+def test(lst_tuples):
+    result = [list(el) for el in lst_tuples]
+    return result
+lst_tuples = ast.literal_eval(input())
+print("Original list of tuples:")
+print(list(lst_tuples))
+print("Convert the said list of tuples to a list of lists:")
+print(test(lst_tuples))
+
+19. Write a python program to accept and print a 2D List
+
+TEST CASES:
+-----------------
+case=t1
+input=3
+3
+1 2 3
+4 5 6
+7 8 9
+output=Matrix is:
+1 2 3
+4 5 6
+7 8 9
+
+case=t2
+input=2
+2
+12 35
+45 67 
+output=Matrix is:
+12 35
+45 67
+
+case=t3
+input=3
+2
+10 20
+40 50
+70 80
+output=Matrix is:
+10 20
+40 50
+70 80
+
+PROGRAM:
+------------------------
+n_rows= int(input())
+
+n_cols = int(input())
+
+matrix = [ ]
+
+for i in range(n_rows):          
+
+    l1=list(map(int,input().split()))
+    
+    matrix.append(l1)
+    
+    
+    
+#To print the matrix
+print("Matrix is:")
+for i in range(n_rows):
+
+    for j in range(n_cols):
+
+        print(matrix[i][j], end = " ")
+
+    print( )    
+
+
+20. Given a 2 D list , print the middle column of this list.
+
+TEST CASES:
+----------------------------
+case=t1
+input=3
+5
+1 2 3 4 5
+6 7 8 9 10
+11 12 13 14 25
+
+Output=3 8 13
+
+case=t2
+Input=2
+5
+2 4 7 1 12
+2 3 45 6 13
+
+Output=
+7 45
+
+case=t3
+fail message="Hidden test Case"
+input=3
+3
+21 22 25
+31 33 35
+41 44 45
+output= 22 33 44
+
+PROGRAM:
+-----------------------------
+def solve(myList):
+    # write your code here
+    for row in range(len(myList)):
+        for column in range(len(myList[row])):
+            if(column==len(myList[row])//2):
+                print(myList[row][column], end = ' ')
+                
+n_rows= int(input())
+n_cols = int(input())
+
+matrix = [ ]
+
+for i in range(n_rows):          
+    l1=list(map(int,input().split()))
+    matrix.append(l1)                
+
+solve(matrix)    
+
+21. Given 2 matrices of same dimensions, you have to print the sum of the 2 matrices.
+Complete the given method ADD which takes two parameters as Matrix A and Matrix B
+
+TEST CASES:
+-----------------------------
+case=t1
+input=3
+2
+1 2 
+3 4 
+5 6
+7 8 
+9 10
+11 12
+output=
+Matrix A :
+1 2 
+3 4 
+5 6
+Matrix B :
+7 8
+9 10
+11 12
+Resultant Matrix is:
+8 10 
+12 14 
+16 18
+
+
+case=t2
+input=3
+3
+1 0 1
+1 1 0
+0 0 1
+1 0 0 
+0 0 0
+0 1 1
+output=
+Matrix A :
+1 0 1
+1 1 0
+0 0 1
+Matrix B :
+1 0 0 
+0 0 0
+0 1 1
+Resultant Matrix is:
+2 0 1
+1 1 0
+0 1 2
+
+
+case=t3
+input=2
+2
+1 2
+3 4
+5 6
+7 8
+output=
+Matrix A :
+1 2 
+3 4 
+Matrix B :
+5 6 
+7 8 
+Resultant Matrix is:
+6 8 
+10 12 
+
+PROGRAM:
+------------------------------------
+def Add(A,B):
+    Res=[]
+    for row in range(len(A)):
+        Res.append([])
+        for i in range(len(A[0])):
+            Res[row].append(A[row][i]+B[row][i])
+    print("Resultant Matrix is:")
+    for row in Res:
+        for i in row:
+            print(i,end=" ")
+        print()    
+
+
+
+
+R = int(input())
+C = int(input())
+A = []
+B=[]
+
+for i in range(R):          # Reading Matrix A row entries
+    l1=list(map(int,input().split()))
+    A.append(l1)
+    
+for i in range(R):          # Reading Matrix B row entries
+    l1=list(map(int,input().split()))
+    B.append(l1)
+
+
+
+print("Matrix A :")    
+for i in range(R):
+    for j in range(C):
+        print(A[i][j], end = " ")
+    print()    
+print("Matrix B :")    
+for i in range(R):
+    for j in range(C):
+        print(B[i][j], end = " ")
+    print()       
+    
+    
+Add(A,B)            
+    
+22. In mathematics, two matrices can only be multiplied if the number of columns in the first matrix is the same as
+the number of rows in the second matrix.
+Given 2 matrices stored in 2 different 2D lists, you have to tell whether multiplication between them is possible.
+
+Complete the given method solve which takes as parameter 2 matrices A and B
+
+TEST CASES:
+---------------------------
+case=t1
+Input=2
+3
+1 5 7 
+2 6 9
+-7 -8 
+-2 -4
+-6 -1
+Output=Possible
+
+case= t2
+Input=2
+2
+1 5 7
+2 6 9
+-7 -8
+-2 -4
+Output=Impossible
+
+PROGRAM:
+----------------------------
+def solve(A,B):
+    # write your code here
+    C1=0
+    R2=0
+    C1=len(A[0])
+    R2=len(B)
+    #print("C1 =",C1)
+    #print("R2=",R2)
+    if(C1==R2):
+        print("Possible")
+    else:
+        print("Impossible")
+        
+
+
+R1 = int(input())
+R2 = int(input())
+A = []
+B=[]
+
+for i in range(R1):          # Reading Matrix A row entries
+    l1=list(map(int,input().split()))
+    A.append(l1)
+    
+for i in range(R2):          # Reading Matrix B row entries
+    l1=list(map(int,input().split()))
+    B.append(l1)
+
+solve(A,B)            
+
+23. Given a square matrix, rotate the matrix by 90 degrees in a clockwise direction. 
+The transformation should be done in-place and in quadratic time.
+
+TEST CASES:
+------------------------
+case=t1
+Input=3
+3
+12   2   -8
+15   -6   27
+-9   1    11  
+Output=
+-9 15 12
+1 -6 2
+11 27 -8
+
+case=t2
+Input=4
+4
+1   2   3   4
+5   6   7   8
+9   10  11  12
+13  14  15  16
+Output=
+13  9   5  1
+14  10  6  2
+15  11  7  3
+16  12  8  4
+
+PROGRAM:
+------------------------------------
+def rotate(mat):
+ 
+    # base case
+    if not mat or not len(mat):
+        return
+ 
+    # `N × N` matrix
+    N = len(mat)
+ 
+    # Transpose the matrix
+    for i in range(N):
+        for j in range(i):
+            temp = mat[i][j]
+            mat[i][j] = mat[j][i]
+            mat[j][i] = temp
+ 
+    # swap columns
+    for i in range(N):
+        for j in range(N // 2):
+            temp = mat[i][j]
+            mat[i][j] = mat[i][N - j - 1]
+            mat[i][N - j - 1] = temp
+ 
+ 
+if __name__ == '__main__':
+ 
+    n_rows= int(input())
+    n_cols = int(input())
+    matrix = [ ]
+    for i in range(n_rows):          
+
+        l1=list(map(int,input().split()))
+    
+        matrix.append(l1)
+ 
+    rotate(matrix)
+ 
+    for r in matrix:
+        print(r)
+ 
 
