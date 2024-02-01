@@ -1,1 +1,317 @@
+1. Write a Python program to find all three, four, and five character words in a string.
 
+TESTCASES:
+---------------------------
+case=t1
+input=this is griet college python
+output=['this', 'griet']
+
+case=t2
+input=123 34 789 2343545 4543
+output=['123', '789', '4543']
+
+case=t3
+input=Come with some innovative ideas tomorrow
+output=['come', 'with','some','ideas']
+
+case=t4
+input=123 abcd 789 pqrstuv 9887 DBMS JAVA English Maths
+output=['123', 'abcd','789', '9887','DBMS','JAVA','Maths']
+
+PROGRAM:
+-----------------------------
+import re
+text = input()
+print(re.findall(r"\b\w{3,5}\b", text))
+
+2. Write a Python program to remove everything except alphanumeric characters from a string.
+
+TESTCASES:
+--------------------
+case=t1
+input=arunkumar@griet.ac.in
+output=arunkumargrietacin
+
+case=t2
+input=contact: grietcpds@admin.moodle.in
+output=contactgrietcpdsadminmoodlein
+
+PROGRAM:
+------------------------------------
+import re
+text1 = input()
+pattern = re.compile('[\W_]+')
+print(pattern.sub('', text1))
+
+3. Write a Python program to split a string into uppercase letters.If the string does not contain any 
+uppercase letters to split.. Print empty list.
+
+TESTCASES:
+---------------------------
+case=t1
+input=ThisISLife
+output=['This', 'I', 'S', 'Life']
+
+case=t2
+input=ILove Python Programming
+output=['I', 'Love ', 'Python ', 'Programming']
+
+
+case=t3
+fail message="the string doesn't contain any uppercase. print empty list"
+input=this is life
+output=[]
+
+PROGRAM:
+-----------------------------------
+import re
+text = input()
+print(re.findall('[A-Z][^A-Z]*', text))
+
+4. Write a Python program to check a decimal number with a precision of 2.
+
+TESTCASES:
+-------------------------------
+case=t1
+input=23.54
+output=The number matches the pattern.
+
+case=t2
+input=23.5
+output=The number does not match the pattern.
+
+case=t3
+fail message="hidden test case"
+input=23.54
+output=The number matches the pattern.
+
+case=t4
+fail message="hidden test case"
+input=23.5
+output=The number does not match the pattern.
+
+PROGRAM:
+-----------------------------
+import re
+num=input()
+dnum = re.compile(r"^[0-9]+(\.[0-9]{2})?$")
+result = dnum.search(num)
+if result:
+    print("The number matches the pattern.")
+else:
+    print("The number does not match the pattern.")
+
+5. Write a Python program to split a string with multiple delimiters.
+
+TESTCASES:
+---------------------
+case=t1
+input=this is griet.Python*programming-regex
+output="['this is griet', 'Python', 'programming', 'regex']"
+
+case=t2
+fail message="Hidden Test case! OOps Something went wrong"
+input=this?is,griet.Python*programming-regex
+output="['this?is', 'griet', 'Python', 'programming', 'regex']"
+
+case=t3
+input=This is,Python.programming+class:for-regex
+output="['This is', 'Python', 'programming', 'class', 'for', 'regex']"
+
+case=t4
+input=Regular+training is important,for the*students:to get-good placements
+output="['Regular', 'training is important', 'for the', 'students', 'to get', 'good placements']"
+
+PROGRAM:
+----------------------------------
+import re
+text=input()
+#text = 'This is Griet. Python Programming-regular expressions'
+print(re.split('\.|\-|\*|\n|\+|\:|\,',text))
+
+6. Write a python program remove lowercase characters from a given string.
+
+TESTCASES:
+---------------------------------
+case=t1
+input=thisisGRIETcollegePYTHONprogramming
+output="GRIETPYTHON"
+
+case=t2
+input=Python Programming GRIET
+output="P P GRIET" 
+
+case=t3
+fail message="hidden test case"
+input=ARSENALgunners
+output="ARSENAL"
+
+PROGRAM:
+---------------------------------------
+import re
+str1 = input()
+remove_lower = re.sub('[a-z]', '', str1)
+print(remove_lower)
+
+7. Write a python program to remove parenthesis and its data from the given sentence.
+
+TESTCASES:
+-----------------------------
+case=t1
+input=ajay (mail.com) GRIET(college)
+output="ajay  GRIET "  
+
+case=t2
+input=ack(gmail.com)griet(college)
+output="ackgriet " 
+
+
+case=t3
+input=bhargav (gmail.com) GRIET(college) alumni
+output="bhargav  GRIET alumni "  
+
+case=t4
+input=Neeta brave(hi) welcome(here) to the game
+output="Neeta brave welcome to the game "  
+
+PROGRAM:
+--------------------------------
+import re
+items = input().split()
+for item in items:
+    print(re.sub(r"\([^)]+\)","", item),end=" ")
+
+8. Write a python program to remove words from a string of length between 1 and a given number.
+
+TEST CASES:
+----------------------
+case=t1
+input=This is python training session for all students
+3
+output="This  python training session   students"
+
+case=t2
+input=This is an example with words of various lengths, like 'a', 'example', and 'house'.
+4
+output="   example  words  various lengths,  '', 'example',  'house'."
+
+case=t3
+input=""
+2
+output=
+
+case=t4
+input=These are some long words that should not be removed.
+4
+output="These    words  should   removed."
+
+PROGRAM:
+--------------------------
+import re
+
+def remove_words_of_length(string, max_length):
+    pattern = r'\b\w{1,' + str(max_length) + r'}\b'
+    result = re.sub(pattern, '', string)
+    return result
+
+input_string = input()
+max_length=int(input())
+output_string = remove_words_of_length(input_string, max_length)
+print(output_string)
+
+9. write a python program to Validate Account Number Using Regular Expressions.
+
+As per RBI Guidelines, Bank Account Number has a unique structure.
+
+The structure of the Account Number is as follows:
+
+1. Bank Account Number is written only in numeric form.
+2. Bank Account number length varies from 9 digits to 18 digits.
+3. No Whitespaces are allowed.
+4. Special characters are not allowed.
+5. It contains numbers from 0 to 9.
+6. Write a python program to remove parenthesis and its data from the given sentence.
+
+TESTCASES:
+------------------------------
+case=t1
+input=635802010014976
+output="Valid Account No."
+
+case=t2
+input=UBIN0563587
+output="Not Valid Account No."
+
+case=t3
+input=9136812@895_
+output="Not Valid Account No."
+
+case=t4
+fail message=" Hidden test case !! Check your Regular Expression Once"
+input=1 2071998
+output="Not Valid Account No."
+
+PROGRAM:
+--------------------------------
+import re
+
+def isValid_Bank_Acc_Number(str):
+
+	regex = "^[0-9]{9,18}$"
+
+	p = re.compile(regex)
+
+	if (str == None):
+		return False
+
+	if(re.search(p, str)):
+		return True
+	else:
+		return False
+
+
+str1 = input()
+if(isValid_Bank_Acc_Number(str1)):
+    print("Valid Account No.")
+else:
+    print("Not Valid Account No.")
+
+10. Write a python program to remove all whitespaces from string.
+
+TETSTCASES:
+---------------------------
+case=t1
+input=This is a sample string with spaces
+output="Thisisasamplestringwithspaces"  
+
+case=t2
+input="  "
+output=
+
+case=t3
+input=NoWhitespaceHere
+output="NoWhitespaceHere"
+
+case=t4
+input=This is a sample string with spaces
+output="Thisisasamplestringwithspaces"  
+
+case=t5
+input=   Remove     all    extra    spaces   . 
+fail message="Please check your code"
+output="Removeallextraspaces."
+
+PROGRAM:
+---------------------------------
+import re
+
+def remove_whitespace(input_string):
+    
+    pattern = r'\s+'
+    no_whitespace_string = re.sub(pattern, '', input_string)
+
+    return no_whitespace_string
+
+input_string = input()
+result = remove_whitespace(input_string)
+print(result)	
