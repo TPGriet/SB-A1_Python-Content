@@ -1,1 +1,396 @@
+1. Write a Python program that Count the number of set bits (1s) in an integer.
 
+TEST CASES:
+---------------------------------
+case=t1
+input=23
+output=4
+
+case=t2
+input=0
+output=0
+
+case=t3
+input=96
+output=2
+
+case=t4
+fail message="Hidden Test case"
+input=121
+output=5
+
+case=t5
+input=15
+output=4
+
+PROGRAM:
+-------------------------------
+def count_set_bits(n):
+    count = 0
+    while n:
+        count += n & 1
+        n >>= 1
+    return count
+
+
+num =int(input())
+print(count_set_bits(num))
+
+2. Write a Python program to reverse the bits of an integer.
+
+TEST CASES:
+--------------------------------
+case=t1
+input=16
+output=1
+
+case=t2
+input=5
+output=5
+
+case=t3
+fail message="hidden test case"
+input=7
+output=7
+
+case=t4
+Input= 170
+Output= 85
+
+case=t5
+input=42
+output=21
+
+case=t6
+input=255
+output=255
+
+PROGRAM:
+--------------------------------------
+def reverse_bits(n):
+    result = 0
+    num_bits = n.bit_length()  # Determine the number of bits in n
+    for _ in range(num_bits):
+        result = (result << 1) | (n & 1)
+        n = n >> 1
+    return result
+
+n=int(input())
+rev_n=reverse_bits(n)
+print(rev_n)
+
+3. Find The Original Array of Prefix Xor(Medium)
+You are given an integer array pref of size n. Find and return the array arr of size n that satisfies:
+pref[i] = arr[0] ^ arr[1] ^ ... ^ arr[i].
+Note that ^ denotes the bitwise-xor operation.
+It can be proven that the answer is unique.
+
+TEST CASES:
+--------------------------
+case=t1
+Input=5,2,0,3,1
+Output=[5,7,2,3,2]
+
+case=t2
+input=13
+output=[13]
+
+case=t3
+fail message="hidden test case"
+input=1,2,3,4
+output=[1, 3, 1, 7]
+
+PROGRAM:
+--------------------------------------------
+def findArray(pref):
+    ans = [0]*len(pref)
+    for i in range(len(pref)):
+        if i == 0:
+            ans[i] = pref[i]
+           # print("pref[{}]={}".format(i,pref[i]))
+        else:
+            ans[i] = (pref[i-1] ^ pref[i])
+            #print("pref[{}]={} ^ {} = {}".format(i,pref[i-1],pref[i],ans[i]))
+    return ans
+lst=list(map(int,input().split(",")))
+print(findArray(lst))
+
+4.  Write a Python program to check whether the number is power of 2 or not.
+
+TEST CASES:
+------------------------
+case=t1
+input=32
+output="YES"
+
+
+case=t2
+input=15
+output="NO"
+
+case=t3
+input=64
+output="YES"
+
+case=t4
+fail message="Hidden test case! OOPS needs to think more"
+input=1
+output="YES"
+
+case=t5
+input=12
+output="NO"
+
+
+PROGRAM:
+-------------------------------
+def is_power_of_two(n):
+    if n <= 0:
+        return False
+    return (n & (n - 1)) == 0
+
+
+num =int(input())
+if(is_power_of_two(num)):
+    print("YES")
+else:
+    print("NO")
+    
+
+5. The Hamming distance between two integers is the number of positions at which the 
+corresponding bits are different.
+
+Given two integers x and y, return the Hamming distance between them.
+
+TEST CASES:
+-----------------------------
+case=t1
+input=1 4
+output=2
+
+case=t2
+input=5 7
+output=1
+
+case=t3
+fail message="hidden test case"
+input=14 10
+output=1
+
+case=t4 
+input=15 8
+output=3
+
+PROGRAM:
+----------------------------
+def hammingDistance(x, y):
+        ans = 0
+        while max(x, y) > 0:
+            if (x&1 != y&1):
+                ans += 1
+            x = x >>1
+            y = y>> 1
+        
+        return ans
+x,y=map(int,input().split())
+print(hammingDistance(x,y))
+
+6. Given a positive integer, check whether it has alternating bits: namely, if two adjacent bits will always have different values.
+
+TEST CASES:
+---------------------------
+case=t1
+Input= 5
+Output="True"
+
+case=t2
+fail message="Hidden Test Case"
+Input= 7
+Output="False"
+
+case=t3
+Input= 11
+Output="False"
+
+case=t4
+Input=10
+output="True"
+
+PROGRAM:
+-------------------------------
+def hasAlternatingBits(n):
+    	t=bin(n)[2:]
+    
+    	for i in range(1,len(t)):
+            if t[i]==t[i-1]:
+            	return False
+    	return True
+
+num=int(input())
+print(hasAlternatingBits(num))
+
+7. Given 3 positives numbers a, b and c. Return the minimum flips required 
+in some bits of a and b to make ( a OR b == c ). (bitwise OR operation).
+
+Flip operation consists of change any single bit 1 to 0 or
+change the bit 0 to 1 in their binary representation.
+
+TEST CASES:
+----------------------------
+case=t1
+Input= 2  6  5
+Output= 3
+
+case=t2
+Input= 4  2  7
+Output= 1
+
+case= t3
+Input= 1  2  3
+Output= 0
+
+PROGRAM:
+-----------------------
+def minFlips(a,b,c):
+    flips = 0
+    while a>0 or b>0 or c>0:
+        bit_a = a&1
+        bit_b = b&1
+        bit_c = c&1
+
+        if bit_c == 0:
+            flips += (bit_a + bit_b)
+        else:
+            if bit_a == 0 and bit_b == 0:
+                flips+=1
+        a>>=1
+        b>>=1
+        c>>=1
+    return flips
+
+a,b,c=map(int,input().split())
+#print(a,b,c)
+print(minFlips(a,b,c))
+
+8. Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+You must implement a solution with a linear runtime complexity and use only constant extra space.
+
+TEST CASES:
+-------------------------
+case=t1
+Input= 2,2,1
+Output= 1
+
+case=t2
+Input = 4,1,2,1,2
+Output= 4
+
+case=t3
+Input= 1
+Output= 1 
+
+case=t4
+input=5,3,4,2
+output=0
+
+PROGRAM:
+------------------------------------------------
+def singleNumber(nums):
+    num=0
+    for i in nums:
+        num^=i
+    return num
+n=list(map(int,input().split(",")))
+print(singleNumber(n))
+
+9. Given an integer array nums where every element appears three times except for one, which appears exactly once.
+Find the single element and return it.
+
+TEST CASES:
+-------------------------
+case=t1
+Input=2,2,3,2
+Output= 3
+
+case=t2
+Input=0,1,0,1,0,1,99
+Output= 99
+
+case=t3
+Input=2,3,2,4,3,2,1,1,1,3
+Output=4
+
+case=t3
+fail message="Hidden test case"
+Input=12,15,12,12,15,15,17
+Output=17
+
+PROGRAM:
+-------------------------------
+def singleNumber(nums):
+        
+        bits = [0]*32
+
+        ##count the bits of absolute values
+
+        for val in nums:
+            val = abs(val)
+            for i in range(32):
+                if val&(1<<i):
+                    bits[i]+=1
+
+        ##if there is a bit from "res" at current bit, then count%3 == 1
+
+        res = 0
+        for ind,cnt in enumerate(bits):
+            if cnt%3 == 1:
+                res+=2**ind
+
+        return res 
+        
+n=list(map(int,input().split(",")))  
+print(singleNumber(n))
+
+10. Alice has 2 integers L and R. Let X be the number we get by xoring all numbers in the range [L,R] 
+(including L and R). He recently learnt about even and odd numbers and wonders what will be the parity on X.
+
+TEST CASES:
+---------------------------
+case=t1
+input=3 5
+output="even"
+
+case=t2
+Input=1 10
+Output="odd"
+
+case=t3
+Input=7 7
+Output="odd"
+
+case=t4
+Input=15 20
+Output="odd"
+
+case=t5
+input=0 0
+output="even"
+
+PROGRAM:
+--------------------------------
+def find_xor_parity(L, R):
+    xor_result = 0
+
+    for i in range(L, R + 1):
+        xor_result ^= i
+
+    # Check parity
+    if xor_result % 2 == 0:
+        return "even"
+    else:
+        return "odd"
+
+# Example usage:
+L, R = map(int, input().split())
+result = find_xor_parity(L, R)
+print(result)
