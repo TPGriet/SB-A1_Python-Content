@@ -1,1 +1,684 @@
+SETS:
+---------------------------------
+1. Given two arrays which are duplicates of each other except one element, that is one element from one of the array is missing,
+we need to find that missing element.
+
+TEST CASES:
+------------------------------
+case=t1
+input= 1, 4, 5, 7, 9
+4, 5, 7, 9
+output=[1] is missing from second array.
+
+case=t2
+input=2, 3, 4, 5, 6
+2, 3, 4, 6
+output=[5] is missing from second array.
+
+case=t3
+input=1, 2, 3, 4, 5
+1, 2, 3, 4, 5
+output="None of the element is missing"
+
+case=t4
+input=5,10,15,20,25,30
+5,10,15,20,30
+output=[25] is missing from second array.
+
+case=t5
+input=3,6,15,18,21
+3,6,12,15,18,21
+output=[12] is missing from first array.
+
+PROGRAM:
+--------------------------------------
+A=list(map(int,input().split(",")))
+B=list(map(int,input().split(",")))
+
+if(len(A)>len(B)):
+    C=list(set(A)-set(B))
+    print(C,"is missing from second array")
+elif(len(B)>len(A)):
+    C=list(set(B)-set(A))
+    print(C,"is missing from first array")
+else:
+    print("None of the element is missing")
+
+2. Given three arrays, find common elements in three sorted lists using sets.
+
+TEST CASES:
+--------------------------
+case=t1
+input= 1, 5, 10, 20, 40, 80
+6, 7, 20, 80, 100
+3, 4, 15, 20, 30, 70, 80, 120
+Output= [80, 20]
+
+case=t2
+Input= 1, 5, 5
+3, 4, 5, 5, 10
+5, 5, 10, 20
+Output= [5]
+
+case=t3
+input=1, 2, 3, 4
+3, 4, 5, 6
+4, 5, 6, 7
+Output=[4]
+
+PROGRAM:
+-----------------------------
+def find_common_elements(ar1, ar2, ar3):
+    set_ar1 = set(ar1)
+    set_ar2 = set(ar2)
+    set_ar3 = set(ar3)
+
+    # Find common elements using set intersection
+    common_elements = list(set_ar1.intersection(set_ar2, set_ar3))
+
+    return common_elements
+
+# Example usage:
+ar1 = list(map(int,input().split(",")))
+ar2 = list(map(int,input().split(",")))
+ar3 = list(map(int,input().split(",")))
+result = find_common_elements(ar1, ar2, ar3)
+print("Output:", result)
+
+3. Check if a given string is binary string or not.
+
+TEST CASES:
+-------------------------
+case=t1
+input=01010101010
+output=Yes
+
+case=t2
+input=0101abc
+output=No
+
+case=t3
+input=012012
+output=No
+
+PROGRAM:
+-------------------------------
+def check(string):
+ 
+    p = set(string)
+    print(p)
+    # declare set of '0', '1' .
+    s = {'0', '1'}
+ 
+    if s == p or p == {'0'} or p == {'1'}:
+        print("Yes")
+    else:
+        print("No")
+        
+str=input()
+check(str)
+
+4. Given a string, the task is to check if every vowel is present or not.
+We consider a vowel to be present if it is present in upper case or lower case. 
+i.e. ‘a’, ‘e’, ‘i’.’o’, ‘u’ or ‘A’, ‘E’, ‘I’, ‘O’, ‘U’ . 
+
+TEST CASES:
+-------------------------------
+case=t1
+Input=timeisprecious
+Output= Not Accepted
+
+case=t2
+Input= ABeeIghiObhkUul
+Output= Accepted
+
+PROGRAM:
+--------------------------------
+def check(string):
+    if len(set(string.lower()).intersection("aeiou")) >= 5:
+        return ('accepted')
+    else:
+        return ("not accepted")
+
+str=input()
+res=check(str)
+print(res)
+
+5. You have a set of integers s, which originally contains all the numbers from 1 to n.
+Unfortunately, due to some error, one of the numbers in s got duplicated to another number in the set,
+which results in repetition of one number and loss of another number.
+
+You are given an integer array nums representing the data status of this set after the error.
+Find the number that occurs twice and the number that is missing and return them in the form of an array.
+
+TEST CASES:
+-----------------------------
+case=t1
+Input=1,2,2,4
+output=[2,3]
+
+case=t2
+input= 1,2,3,3,4
+output=[3,5]
+
+case=t3
+input=1,1
+output=[1, 2]
+
+case=t4
+Input=1, 2, 3, 4, 4, 6
+Output=[4, 5]
+
+PROGRAM:
+-----------------------------------
+nums=list(map(int,input().split(",")))
+nums = sorted(nums)
+    
+presentSet = set(nums)
+actualSet = set([i for i in range(1, len(nums)+1)])
+result=[]
+for i in range(0, len(nums) - 1):
+    if nums[i] == nums[i + 1]:
+        result.append(nums[i])
+
+diff = min(actualSet.difference(presentSet))
+result.append(diff)
+print(result)
+
+DICTINORIES:
+---------------------------
+1. Write a Python program to convert two lists into a dictionary in a way that item from list1 is the key 
+and item from list2 is the value
+
+TEST CASES:
+-----------------------
+case=t1
+input=Ten,Twenty,Thirty
+10, 20, 30
+
+output="OrderedDict([('Ten', 10), ('Twenty', 20), ('Thirty', 30)])"
+
+case=t2
+input=Apple,Banana,Orange,Cherry,Strawberry
+180,60,100,220,140
+
+output="OrderedDict([('Apple', 180), ('Banana', 60), ('Orange', 100), ('Cherry', 220), ('Strawberry', 140)])"
+
+case=t3
+input=Red,Green,Orange,Yellow,Violet,Black
+3,5,6,6,6,5
+
+output="OrderedDict([('Red', 3), ('Green', 5), ('Orange', 6), ('Yellow', 6), ('Violet', 6), ('Black', 5)])"
+
+PROGRAM:
+------------------------------
+thisdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964,
+  "year": 2020
+}
+print(thisdict)
+
+
+2. Write a Python program to create a new dictionary by extracting the mentioned keys from the given dictionary.
+
+TEST CASES:
+-----------------------------
+case=t1
+input={"name": "Kelly","age": 25,"salary": 8000,"city": "New york"}
+name,salary
+
+output="OrderedDict([('name', 'Kelly'), ('salary', 8000)])"
+
+case=t2
+input={'Physics': 82,'Math': 65,'History': 75,'Chemistry': 89,'GK': 50}
+Physics,Math,Chemistry
+
+output="OrderedDict([('Physics', 82), ('Math', 65), ('Chemistry', 89)])"
+
+PROGRAM:
+------------------------------------
+import ast
+from collections import OrderedDict
+try:
+    user_input=input()
+    user_dict = ast.literal_eval(user_input)
+    if not isinstance(user_dict, dict):
+        raise ValueError("Input is not a dictionary")
+except (SyntaxError, ValueError) as e:
+    print("Error: {}".format(e))
+    user_dict = {}
+
+keys=input().split(",")
+res = OrderedDict()
+for k in keys:
+    # add current key with its va;ue from sample_dict
+    res.update({k: user_dict[k]})
+print(res)
+#print(newDict)
+
+3. Given a dictionary, the task is to split a dictionary in python into keys and values into different lists.
+
+TEST CASES:
+-------------------------
+case=t1
+Input={'a':'akshat','b':'bhuvan','c':'chandan'}
+Output= 
+keys: ['a', 'b', 'c']
+values: ['akshat', 'bhuvan', 'chandan']
+
+case=t2
+input={'Physics': 82,'Math': 65,'History': 75,'Chemistry': 89,'GK': 50}
+output=keys: ['Chemistry', 'GK', 'History', 'Math', 'Physics']
+values: [89, 50, 75, 65, 82]
+
+PROGRAM:
+--------------------------------
+import ast
+import collections
+
+user_input = input()
+
+# Safely evaluate the string as a dictionary
+try:
+    user_dict = ast.literal_eval(user_input)
+    if not isinstance(user_dict, dict):
+        raise ValueError("Input is not a dictionary")
+except (SyntaxError, ValueError) as e:
+    print("Error: {}".format(e))
+    user_dict = OrderedDict()
+
+user_dict1 = collections.OrderedDict(sorted(user_dict.items()))
+#print(user_dict1)
+keys, values = zip(*user_dict1.items())
+ 
+# printing keys and values separately
+print ("keys : ", list(keys))
+print ("values : ", list(values))
+#keys = user_dict.keys()
+#values = user_dict.values()
+ 
+# printing keys and values separately
+#print("keys : ", str(keys))
+#print("values : ", str(values))
+
+4. Given a dictionary, the task is to to remove all the values that are None or Empty.
+
+TEST CASES:
+----------------------
+case=t1
+Input={'Name': 'Pooja', 'Age': 23, 'Gender': None, 'Mark': 488, 'City': None}
+output="After Dropping : [('Age', 23), ('Mark', 488), ('Name', 'Pooja')]"
+
+case=t2
+input={'Physics': 82,'Math': 65,'History': None,'Chemistry': 89,'GK': 50}
+output="After Dropping : [('Chemistry', 89), ('GK', 50), ('Math', 65), ('Physics', 82)]"
+
+PROGRAM:
+-----------------------------------
+import ast
+import collections
+
+user_input = input()
+
+# Safely evaluate the string as a dictionary
+try:
+    user_dict = ast.literal_eval(user_input)
+    if not isinstance(user_dict, dict):
+        raise ValueError("Input is not a dictionary")
+except (SyntaxError, ValueError) as e:
+    print("Error: {}".format(e))
+    user_dict = collections.OrderedDict()
+user_dict1 = collections.OrderedDict(user_dict)
+#print("Before Dropping :",user_dict1)
+user_dict1 = {key:value for (key, value) in user_dict1.items() if value is not None}
+print("After Dropping :",sorted(user_dict1.items()))
+
+
+5. Given a dictionary, the task is to Count number of items in a dictionary value that is a list
+
+TEST CASES:
+---------------------------
+case=t1
+Input={'A' : [1, 2, 3, 4, 5, 6, 7, 8, 9],'B' : 34,'C' : 12,'D' : [7, 8, 9, 6, 4] }
+output= 14
+
+case=t2
+input={'Physics': [82,75,90],'Math': [65,85],'History':[68,59],'Chemistry':[89],'GK': 50}
+output=8
+
+case=t3
+input={'Red': 255,'Green': 258,'Yellow':220,'Blue':[89,96]}
+output=2
+
+PROGRAM:
+----------------------------
+
+import ast
+
+user_input = input()
+
+# Safely evaluate the string as a dictionary
+try:
+    user_dict = ast.literal_eval(user_input)
+    if not isinstance(user_dict, dict):
+        raise ValueError("Input is not a dictionary")
+except (SyntaxError, ValueError) as e:
+    print("Error: {}".format(e))
+    user_dict = dict()
+count = 0
+for x in user_dict:
+    if isinstance(user_dict[x], list):
+            count += len(user_dict[x])
+print(count)    
+
+ARRAYS IN PYTHON:
+--------------------------------
+1. You are given a non-negative number represented as an array of digits.
+Example: 123 is represented as [1,2,3]
+You must add 1 to the number ( increment the number represented by the digits )
+and return the required array or list.
+The digits are stored such that the most significant digit is at the head of the list.
+
+TEST CASES:
+-------------------------
+case=t1
+input=1,2,3
+output=[1,2,4]
+
+case=t2
+input=9, 9, 9
+output=[1, 0, 0, 0]
+
+case=t3
+input=0, 0, 2, 1
+output=[2,2]
+
+case=t4
+input=9
+output=[1,0]
+
+case=t5
+input=0
+output=[1]
+
+case=t6
+input=1,9,9,9,9,9,9,9
+output=[2,0,0,0,0,0,0,0]
+
+PROGRAM:
+------------------------------
+def increment(digits):
+    
+    carry = 1
+    n = len(digits)
+    
+    for i in range(n - 1, -1, -1):
+        
+        new_digit = digits[i] + carry
+        carry = new_digit // 10
+        digits[i] = new_digit % 10
+    
+    if carry:
+        digits.insert(0, carry)
+    
+    while digits and digits[0] == 0:
+        digits.pop(0)
+    
+    # If all digits were zeros, return [1]
+    if not digits:
+        return [1]
+    
+    return digits
+
+input_digits =list(map(int,input().split(",")))
+result = increment(input_digits)
+print(result)
+
+2. Given an array of integers nums and an integer target,
+return indices of the two numbers such that they add up to target.
+
+You may assume that each input would have exactly one solution, 
+and you may not use the same element twice.
+You can return the answer in any order.
+
+TESTCASES:
+------------------------
+case=t1
+Input=2,7,11,15
+9
+Output=[0,1]
+
+case=t2
+Input=3,2,4
+6
+Output=[1,2]
+
+case=t3
+Input=3,3
+6
+Output=[0,1]
+
+PROGRAM:
+-------------------------------
+def two_sum(nums, target):
+    seen = {}
+    
+    for i, num in enumerate(nums):
+        complement = target - num
+        
+        if complement in seen:
+            return [seen[complement], i]
+        
+        seen[num] = i
+ 
+nums = list(map(int,input().split(",")))
+target = int(input())
+indices = two_sum(nums, target)
+print(indices)
+
+3. An array contains both positive and negative numbers in random order. Rearrange the array elements so that all negative numbers appear before all positive numbers.
+
+TEST CASES:
+------------------------------
+case=t1
+Input= -12, 11, -13, -5, 6, -7, 5, -3, -6
+Output= [-13, -12, -7, -6, -5, -3, 5, 6, 11]
+
+case=t2
+Input=3,2,4,-2,-5,8,-9
+Output=[-9, -5, -2, 2, 3, 4, 8]
+
+case=t3
+Input=3,3,-15,-20,36,9
+Output=[-20, -15, 3, 3, 9, 36]
+
+PROGRAM:
+-----------------------------------
+def rearrange_array(arr):
+    left = 0
+    right = len(arr) - 1
+    
+    while left <= right:
+        # Find the next negative number from the left
+        while arr[left] < 0:
+            left += 1
+        
+        # Find the next positive number from the right
+        while arr[right] > 0:
+            right -= 1
+        
+        # Swap the found elements
+        if left <= right:
+            arr[left],arr[right] = arr[right],arr[left]
+            left += 1
+            right -= 1
+    
+    return sorted(arr)
+
+# Example usage
+input_array = list(map(int,input().split(",")))
+result_array = rearrange_array(input_array)
+print(result_array)
+
+4. Find the maximum product of two integers in an array where all elements are positive.
+
+TEST CASES:
+---------------------------
+case=t1
+Input= 15,21,23,8,9,10,35
+Output= 
+
+case=t2
+Input=3,12,4,8,10
+Output=120
+
+case=t3
+Input=3,4,18,36,9
+Output=648
+
+PROGRAM:
+---------------------------------------
+# Solution 1:
+def max_product(arr):
+    arr.sort(reverse=True)
+    return arr[0]*arr[1]
+
+arr = list(map(int,input().split(",")))
+print(max_product(arr))
+
+
+'''
+# Solution 2: O(n) complexity 
+
+def max_product(arr):
+   
+    max1, max2 = 0, 0 
+ 
+    for num in arr:  
+        if num > max1:  
+            max2 = max1  
+            max1 = num  
+        
+        elif num > max2 and num< max1:  
+            max2 = num  
+    
+    return max1 * max2  
+ 
+arr = list(map(int,input().split(",")))
+print(max_product(arr)) 
+
+5. Given an array of char, return True if the sequence of char a, b, c appears in the array somewhere.
+
+TEST CASES:
+-----------------------------
+case=t1
+input=a,x,a,b,c
+output= "True"
+
+case=t2
+input=f,x,a,i,c,t
+output= "False"
+
+case=t3
+input=k,x,a,e,c
+output= "False"
+
+PROGRAM:
+------------------------------
+def Array_abc(char):
+    for i in range(len(char) - 2):
+        if char[i] == 'a' and char[i + 1] == 'b' and char[i + 2] == 'c':
+            return True
+    return False
+
+arr=input().split(",")
+#print(arr)
+print (Array_abc(arr))
+
+6.  Read as many elements as you want to in an arraylist once done press quit in the next line.
+And find the sum of elements between largest and second largest numbers in the given list.
+
+observe all the given test cases before solving.
+
+TEST CASES:
+----------------------
+case=t1
+input=2
+1
+6
+7
+8
+9
+5
+4
+10
+quit
+output=
+Sum between the largest and second-largest numbers: 9
+
+case=t2
+input=1
+4
+8
+10
+quit
+output=
+Sum between the largest and second-largest numbers: 0
+
+case=t3
+input=2
+2
+2
+2
+2 
+quit
+output=
+At least two distinct numbers are required.
+
+case=t4
+input=10
+quit
+output=
+At least two distinct numbers are required.
+
+PROGRAM:
+--------------------------------------------------
+def find_sum(nums):
+   
+    if len(set(nums)) < 2:
+        print("At least two distinct numbers are required.")
+        return
+
+    
+    max_index = nums.index(max(nums))
+    nums[max_index] = float('-inf')  # Set the largest number to negative infinity
+    second_max_index = nums.index(max(nums))
+
+   
+    #start_index, end_index = sorted([max_index, second_max_index])
+
+    #sum_between = sum(nums[start_index+1:end_index])
+    
+    print("max_index=",max_index)
+    print("second_max_index",second_max_index)
+    if(max_index>second_max_index):
+        start_index=second_max_index+1
+        end_index=max_index
+    else:
+        start_index=max_index+1
+        end_index=second_max_index
+
+    print("Sum between the largest and second-largest numbers:",sum(nums[start_index:end_index]) )
+
+# Read input until "quit" is entered
+input_list = []
+while True:
+    user_input = input()
+    if user_input.lower() == 'quit':
+        break
+    else:
+        input_list.append(int(user_input))
+find_sum(input_list)
 
