@@ -1,1 +1,496 @@
+SEARCHING ALGORTHMS:
+------------------------------------
 
+1. Write a program to take an 1D integer array and also another integer, the key.
+You have to find the position of the key in the array. If the key does not exist, print No.
+Otherwise, print the index.
+
+Input Format:
+------------------------
+First line take an Integer input from stdin which is array length n.
+Second line take n Integers which is inputs of array.
+Third line take an Integer input which is key to search.
+
+Output Format:
+-----------------------------
+Print Index when key is present otherwise print No.
+Note: If the key exists in more than one index, choose that index which has higher value.
+
+TEST CASES:
+-------------------------------
+case=t1
+Input=5
+1 3 2 4 5
+2
+
+Output=2
+
+case=t2
+Input=4
+4 2 7 3
+9
+
+Output="No"
+
+case=t3
+fail message="Always print higher index"
+input=7
+1 2 3 4 3 6 5
+3
+output=4
+
+case=t4
+input=5
+1 1 1 1 2
+1
+output=3
+
+PROGRAM:
+-----------------------------------
+n=int(input())
+l=[]
+l=list(map(int,input().split()))
+key=int(input())
+for i in range(n - 1, -1, -1):
+    if(l[i]==key):
+        print(i)
+        break;
+else:
+     print("No")
+
+2.  Write a program to take an 1D integer array which is sorted  and also another integer, the key. 
+You have to find whether the key exists in the list or not.
+If the key does not exist, print -1. Otherwise, print 1.
+
+Input Format:
+-------------------------------------
+First line take an Integer input from stdin which is array length n.
+Second line take n Integers which is inputs of array.
+Third line take an Integer input which is key to search.
+Output Format:
+------------------------------
+Print 1 when key is present otherwise print -1.
+
+TEST CASES:
+-------------------------------
+case=t1
+Input=5
+1 2 4 5 6
+2
+Output=1
+
+case=t2
+Input=6
+5 6 7 8 9 10
+3
+Output=-1
+
+case=t3
+fail message="Hidden Test case"
+input=10
+10 12 11 14 16 8 22 6 4 19
+15
+output=-1
+
+case=t4
+input=7
+3 2 5 1 5 6 12
+5
+output=1
+
+PROGRAM:
+----------------------------------
+n=int(input())
+l=list(map(int,input().split()))
+key=int(input())
+f=-1
+low=0
+high=n
+mid=n//2
+while(l[mid]!=key and high >= low):
+    mid = (high+low)//2
+    if(l[mid] == key):
+        f=1
+        break
+    elif(key > l[mid]):
+        low = mid + 1
+    elif(key < l[mid]):
+        high = mid - 1;
+print(f)
+
+SORTING:
+-------------------------------
+1. Write a program to sort the array using bubble sort
+
+TEST CASES:
+------------------------
+case=t1
+input= 5 6 4 2 3
+output=2 3 4 5 6
+
+case=t2
+input=12 45 63 19 78 15
+output=12 15 19 45 63 78
+
+PROGRAM:
+------------------------------
+
+def bubbleSort(arr):
+        # Traverse through all array elements 
+        n=len(arr)
+        for i in range(n): 
+                for j in range(0, n-i-1): 
+                    if arr[j] > arr[j+1] : 
+                        arr[j], arr[j+1] = arr[j+1], arr[j] 
+                                
+        return arr
+        
+arr=list(map(int,input().split()))
+a=bubbleSort(arr)
+print("Sorted Array is: ")
+for i in a:
+    print(i,end=" ")
+
+2. Write a program to sort the given array by using Selection sort
+
+TEST CASES:
+---------------------------
+case=t1
+input=1 3 2 3 1 2
+output=Pass 1 : [1, 3, 2, 3, 1, 2]
+Pass 2 : [1, 1, 2, 3, 3, 2]
+Pass 3 : [1, 1, 2, 3, 3, 2]
+Pass 4 : [1, 1, 2, 2, 3, 3]
+Pass 5 : [1, 1, 2, 2, 3, 3]
+Sorted Array is:
+1 1 2 2 3 3
+
+case=t2
+input=12 29 25 8 32 17 40
+output=Pass 1 : [8, 29, 25, 12, 32, 17, 40]
+Pass 2 : [8, 12, 25, 29, 32, 17, 40]
+Pass 3 : [8, 12, 17, 29, 32, 25, 40]
+Pass 4 : [8, 12, 17, 25, 32, 29, 40]
+Pass 5 : [8, 12, 17, 25, 29, 32, 40]
+Pass 6 : [8, 12, 17, 25, 29, 32, 40]
+Sorted Array is:
+8 12 17 25 29 32 40
+
+case=t3
+fail message="Hidden Test Case"
+input=10 7 8 9 5 1
+output=Pass 1 : [1, 7, 8, 9, 5, 10]
+Pass 2 : [1, 5, 8, 9, 7, 10]
+Pass 3 : [1, 5, 7, 9, 8, 10]
+Pass 4 : [1, 5, 7, 8, 9, 10]
+Pass 5 : [1, 5, 7, 8, 9, 10]
+Sorted Array is:
+1 5 7 8 9 10 
+
+PROGRAM:
+-------------------------------
+def selectionSort(A):
+    p=0
+    for i in range(len(A)-1): 
+        p=p+1
+        min_index = i 
+        for j in range(i+1, len(A)): 
+            if A[min_index] > A[j]: 
+                min_index = j 
+        A[i], A[min_index] = A[min_index], A[i] 
+        print("Pass {} :" .format(p),end= " ")
+        print(A)
+    return A
+    
+arr=list(map(int,input().split()))
+selectionSort(arr)
+print("Sorted Array is:")
+for i in arr:
+    print(i, end=" ")
+
+
+
+3. Write a program to sort the given array by using Insertion sort
+
+TEST CASES:
+--------------------
+case=t1
+input=1 3 3 2 1 2
+output=Pass: 1 [1, 3, 3, 2, 1, 2]
+Pass: 2 [1, 3, 3, 2, 1, 2]
+Pass: 3 [1, 2, 3, 3, 1, 2]
+Pass: 4 [1, 1, 2, 3, 3, 2]
+Pass: 5 [1, 1, 2, 2, 3, 3]
+Sorted Array is: 1 1 2 2 3 3 
+
+case=t2
+input=12 29 8 25 32 17 40
+output=Pass: 1 [12, 29, 8, 25, 32, 17, 40]
+Pass: 2 [8, 12, 29, 25, 32, 17, 40]
+Pass: 3 [8, 12, 25, 29, 32, 17, 40]
+Pass: 4 [8, 12, 25, 29, 32, 17, 40]
+Pass: 5 [8, 12, 17, 25, 29, 32, 40]
+Pass: 6 [8, 12, 17, 25, 29, 32, 40]
+Sorted Array is: 8 12 17 25 29 32 40 
+
+PROGRAM:
+-------------------------------
+def insertionSort(arr):
+    p=0    
+    for i in range(1, len(arr)): 
+        p=p+1
+        key = arr[i] 
+        j = i-1
+        while j >= 0 and key < arr[j] : 
+            arr[j + 1] = arr[j] 
+            j -= 1
+        arr[j + 1] = key 
+        print("Pass:",p, end= " ")
+        print(arr)
+    return arr
+    
+array=list(map(int,input().split()))
+insertionSort(array)
+print("Sorted Array is:", end=" ")
+for i in array:
+    print(i, end=" ")
+
+4.  Write aPython Program to Sort an array using Quick sort algrithm with pivot as
+last element.
+
+QuickSort is a sorting algorithm based on the Divide and Conquer algorithm
+that picks an element as a pivot and partitions the given array around the picked
+pivot by placing the pivot in its correct position in the sorted array.
+
+Divide: In Divide, first pick a pivot element. After that,
+partition or rearrange the array into two sub-arrays such that 
+each element in the left sub-array is less than or equal to the pivot element
+and each element in the right sub-array is larger than the pivot element.
+
+Conquer: Recursively, sort two subarrays with Quicksort.
+
+Quicksort is the widely used sorting algorithm that makes 
+(n log n) comparisons in average case for sorting an array of n elements. 
+It is a faster and highly efficient sorting algorithm.
+
+TEST CASES:
+-----------------------------
+case=t1
+Input=5, 4, 3, 1
+Output=1 3 4 5
+
+case=t2
+fail message="Hidden Test Case"
+Input=10, 7, 8, 9, 1, 5
+Output=1 5 7 8 9 10
+
+case=t3
+Input=68, 13, 1, 49, 58
+Output=1 13 49 58 68
+
+PROGRAM:
+---------------------------------
+class Solution:
+
+    def quicksort_last_pivot(self, Arr):
+        s = Solution()
+        if len(Arr) <= 1:
+            return Arr
+        else:
+            pivot = Arr[-1]
+            left = [x for x in Arr[:-1] if x < pivot]
+            right = [x for x in Arr[:-1] if x >= pivot]
+            return s.quicksort_last_pivot(left) + [pivot] + s.quicksort_last_pivot(right)
+
+if __name__ == '__main__':
+    array = list(map(int, input().split(",")))
+    s = Solution()
+    arr = s.quicksort_last_pivot(array)
+    print(arr)
+    for i in arr:
+        print(i, end=" ")
+   
+'''
+# Pivot as First Element
+class Solution:
+    
+    def quicksort(self, Arr):
+        s=Solution()
+        if len(Arr) <= 1:
+                return Arr
+        else:
+            pivot = Arr[0]
+            left = [x for x in Arr[1:] if x < pivot]
+            right = [x for x in Arr[1:] if x >= pivot]
+            #print(left + [pivot] +right)
+            return s.quicksort(left) + [pivot] + s.quicksort(right)        
+        
+if __name__ == '__main__':
+    array =list(map(int,input().split(",")))   
+    s=Solution()
+    arr=s.quicksort(array)
+    print(arr)
+    for i in arr:
+        print(i,end=" ")
+ '''
+
+RECURSION:
+--------------------------------
+1. Write a method Fac that takes as parameter an integer (n) and returns the Factorial of n. 
+The Fac method has to be in a Solution class. Check the code editor for ideal method definition.
+
+Note: n >= 0
+
+TEST CASES:
+------------------------
+case=t1
+Input=0
+output=1
+
+case=t2
+input=1
+output=1
+
+case=t3
+input=5
+output=120
+
+PRGRAM:
+-------------------------------
+
+def Fac(n):
+    if(n==0):
+        return 1
+    if(n>0):
+        return(n* Fac(n-1))
+        
+num=int(input())
+Fact=Fac(num)
+print(Fact)
+        
+2. Tower of Hanoi is a mathematical puzzle where we have three rods(Source, Helper and Destination) and n disks.
+The objective of the puzzle is to move the entire stack to another rod, obeying the following simple rules: 
+1) Only one disk can be moved at a time. 
+2) Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack 
+i.e. a disk can only be moved if it is the uppermost disk on a stack. 
+3) No disk may be placed on top of a smaller disk.
+
+Note: Transferring the top n-1 disks from source rod to helper rod can again
+be thought of as a fresh problem and can be solved in the same manner.
+
+TEST CASES:
+---------------------------------
+Case=t1
+Input=3 A B C
+Output=
+A to C
+A to B
+C to B
+A to C
+B to A
+B to C
+A to C
+
+case=t2
+input=4 A B C
+output=
+A to B
+A to C
+B to C
+A to B
+C to A
+C to B
+A to B
+A to C
+B to C
+B to A
+C to A
+B to C
+A to B
+A to C
+B to C
+
+case=t3
+input=2 A B C
+output=
+A to B
+A to C
+B to C
+
+case=t4
+input=1 A B C
+output=
+A to C
+
+
+PROGRAM:
+--------------------------------------
+class Stack:
+    def __init__(self,size):
+        self.size=size
+        self.data = []
+        self.top = -1
+    def push(self, element):
+        self.data.append(element)
+        self.top = self.top + 1
+    def pop(self):
+        popped_element = None
+        if(self.top>-1):
+            popped_element = self.data.pop() 
+            self.top = self.top - 1
+        return popped_element
+    def isEmpty(self):
+        if self.top==-1:
+            return 1
+        else:
+            return 0
+    def isFull(self):
+        if self.top==size-1:
+            return 1
+        else:
+            return 0
+    def peek(self):
+        if(self.isEmpty()):
+            print("No elements in Stack")
+        else:
+            return(self.data[self.top])
+    
+
+if __name__ == "__main__": 
+    
+    test_cases=int(input())
+    size=int(input()) # size of Stack
+    stack=Stack(size) # creating new stack object
+    
+    while(test_cases>0): 
+        instruction=input().split()
+        #print("len :",len(instruction))
+        #print("instruction :",instruction)
+        val=0
+        if len(instruction)>1:
+            val=int(instruction[1])
+        instruction=int(instruction[0])
+        #####
+        # Instruction 1 means Push
+        # Instruction 2 means Pop
+        # Instruction 3 means Peek
+        # Instruction 4 means isEmpty
+        # Instruction 5 means isFull
+        #####
+
+        if(instruction==1):  
+            print("push:",val)
+            stack.push(val)
+
+        elif (instruction==2):
+            print("pop:", stack.pop())
+
+        elif (instruction==3):            
+            print("peek: ",stack.peek())
+
+        elif(instruction==4):
+            print("isEmpty:", stack.isEmpty())
+
+        elif(instruction==5):
+            print("isFull:", stack.isFull())
+        test_cases=test_cases-1 
