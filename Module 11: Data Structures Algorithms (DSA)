@@ -1,1 +1,1324 @@
+STACKS:
+-------------------------
+1. Write a program to implement the following operations in a Stack:
 
+Operations:
+
+push:       To add the elements into Stack
+pop:        To remove the element from Stack and return the element.
+peek:       To get the top element from the Stack and return the element.
+isEmpty:    returns 1 is stack is empty. Else returns 0
+isFull:     returns 1 is stack is full. Else returns 0
+
+Some code has already been written. Please use the given structure / class to write your own functions
+
+TEST CASES:
+------------------------------
+case=t1
+input=10
+10
+5
+4
+1 1
+1 1
+1 2
+1 3
+1 4
+3
+2
+3
+output=isFull:0
+isEmpty:1
+push:1
+push:1
+push:2
+push:3
+push:4
+peek:4
+pop:4
+peek:3
+
+PROGRAM:
+-------------------------------
+class Stack:
+    def __init__(self,size):
+        self.size=size
+        self.data = []
+        self.top = -1
+    def push(self, element):
+        self.data.append(element)
+        self.top = self.top + 1
+    def pop(self):
+        popped_element = None
+        if(self.top>-1):
+            popped_element = self.data.pop() 
+            self.top = self.top - 1
+        return popped_element
+    def isEmpty(self):
+        if self.top==-1:
+            return 1
+        else:
+            return 0
+    def isFull(self):
+        if self.top==size-1:
+            return 1
+        else:
+            return 0
+    def peek(self):
+        if(self.isEmpty()):
+            print("No elements in Stack")
+        else:
+            return(self.data[self.top])
+    
+
+if __name__ == "__main__": 
+    
+    test_cases=int(input())
+    size=int(input()) # size of Stack
+    stack=Stack(size) # creating new stack object
+    
+    while(test_cases>0): 
+        instruction=input().split()
+        #print("len :",len(instruction))
+        #print("instruction :",instruction)
+        val=0
+        if len(instruction)>1:
+            val=int(instruction[1])
+        instruction=int(instruction[0])
+        #####
+        # Instruction 1 means Push
+        # Instruction 2 means Pop
+        # Instruction 3 means Peek
+        # Instruction 4 means isEmpty
+        # Instruction 5 means isFull
+        #####
+
+        if(instruction==1):  
+            print("push:",val)
+            stack.push(val)
+
+        elif (instruction==2):
+            print("pop:", stack.pop())
+
+        elif (instruction==3):            
+            print("peek: ",stack.peek())
+
+        elif(instruction==4):
+            print("isEmpty:", stack.isEmpty())
+
+        elif(instruction==5):
+            print("isFull:", stack.isFull())
+        test_cases=test_cases-1 
+
+2.A bracket is considered to be any one of the following characters: (, ), {, }, [, or ].
+
+Two brackets are considered to be a matched pair if the an opening bracket 
+(i.e., (, [, or {) occurs to the left of a closing bracket (i.e., ), ], or }) of the exact same type. 
+There are three types of matched pairs of brackets: [], {}, and ().
+
+A matching pair of brackets is not balanced if the set of brackets it encloses are not matched.
+For example, {[(])} is not balanced because the contents in between { and } are not balanced.
+The pair of square brackets encloses a single, unbalanced opening bracket, (, 
+and the pair of parentheses encloses a single, unbalanced closing square bracket, ].
+
+By this logic, we say a sequence of brackets is balanced if the following conditions are met:
+
+It contains no unmatched brackets.
+The subset of brackets enclosed within the confines of a matched pair of brackets is also a matched pair of brackets.
+Given a string s, determine whether s is balanced.
+If a string is balanced, return 1. Otherwise, return 0.
+
+TEST CASES:
+-------------------------
+case=t1
+Input={[()]}
+Output=1
+
+case=t2
+Input={[(])}
+Output=0
+
+PROGRAM:
+-------------------------------
+class Stack:
+    def __init__(self):
+        self.size = 10
+        self.data = []
+        self.top = -1
+
+    def push(self, element):
+        self.data.append(element)
+        self.top += 1
+
+    def pop(self):
+        popped_element = None
+        if self.top > -1:
+            popped_element = self.data.pop()
+            self.top -= 1
+        return popped_element
+
+    def is_empty(self):
+        return self.top == -1
+
+    def is_full(self):
+        return self.top == self.size - 1
+class Solution:
+    def __init__(self):
+        self.st = Stack()
+    def isBalanced(self, exp):
+        # write your method
+        for i in range(len(exp)):
+            if exp[i] == '(' or exp[i] == '{' or exp[i] == '[':
+                self.st.push(exp[i])
+            elif exp[i] == ')' or exp[i] == '}' or exp[i] == ']':
+                if self.st.is_empty() or not self.are_pair(self.st.pop(), exp[i]):
+                    return 0
+        return 1
+
+    @staticmethod
+    def are_pair(t, e):
+        return (t == '(' and e == ')') or (t == '{' and e == '}') or (t == '[' and e == ']')
+
+str=input()
+s=Solution()
+print(s.isBalanced(str))
+
+3. While us humans can understand how to calculate a simple mathematical expression like 2 + 3 * 7 - 9 / 5, 
+computers use a special technique to make it easier for them. They convert an infix expression to a postfix expression.
+
+An infix expression is one in which all the operators (+,-,*,/) appear between operands, just like our usual expressions.
+
+A postifx expression is one in which all the operands appear first, and the operators appear after the operands.
+
+Write a class Fixes that has 2 strings infix and postfix. 
+It should have a parameterized constructor to accept the value of infix.
+Also, it should have a method called convert that converts the infix to a postfix expression and stores it in the postfix.
+
+Write only the Fixes class. Main class has already been written.
+
+Hint: Check google for tutorials on infix to postfix conversion first. Then write the code for it.
+Note: all operands will be of single digit only
+
+TEST CASES:
+--------------------------
+case=t1
+input=2+3*7-9/5
+output="Infix: 2+3*7-9/5
+Postfix: 237*+95/-"
+
+case=t2
+input=(2+3)*7-9/2^1
+output="Infix: (2+3)*7-9/2^1
+Postfix: 23+7*921^/-"
+
+case=t3
+input=3*3-7/8+1/4-8-6/9+1
+output="Infix: 3*3-7/8+1/4-8-6/9+1
+Postfix: 33*78/-14/+8-69/-1+"
+
+PROGRAM:
+-----------------------------
+Operators = set(['+', '-', '*', '/', '(', ')', '^'])  # collection of Operators
+Priority = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
+
+class Fixes:
+    def __init__(self, exp):
+        self.expression = exp.strip()
+        self.stack = []
+        self.postfix = ''
+
+    def convert(self):
+        for character in self.expression:
+            if character not in Operators:
+                self.postfix += character
+            elif character == '(':
+                self.stack.append('(')
+            elif character == ')':
+                while self.stack and self.stack[-1] != '(':
+                    self.postfix += self.stack.pop()
+                self.stack.pop()
+            else:
+                while self.stack and self.stack[-1] != '(' and Priority[character] <= Priority[self.stack[-1]]:
+                    self.postfix += self.stack.pop()
+                self.stack.append(character)
+
+        while self.stack:
+            self.postfix += self.stack.pop()
+        
+
+## write Fixes class above this line ##
+
+equation = input()
+fix = Fixes(equation)
+print("Infix:",equation)
+fix.convert()
+print("Postfix:",fix.postfix)
+
+4. Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+Valid operators are+, -, *, /.Each operand may be an integer or another expression.
+
+TEST CASES:
+------------------------
+case=t1
+Input=2,1,+,3,*
+Output=Result: 9
+
+case=t2 
+Input=4,13,5,/,+
+Output=Result: 6
+
+PROGRAM:
+-----------------------------
+def evaluate_postfix(expression):
+    stack = []
+
+    for element in expression:
+        if element.isdigit():  # If the element is a digit, push it onto the stack
+            stack.append(int(element))
+        else:
+            # If the element is an operator, pop the required number of operands from the stack,
+            # perform the operation, and push the result back onto the stack
+            operand2 = stack.pop()
+            operand1 = stack.pop()
+
+            if element == "+":
+                stack.append(operand1 + operand2)
+            elif element == "-":
+                stack.append(operand1 - operand2)
+            elif element == "*":
+                stack.append(operand1 * operand2)
+            elif element == "/":
+                stack.append(operand1 / operand2)
+
+    # The final result should be on the top of the stack
+    return stack[0]
+
+expression_a = input().split(",")
+#print(expression_a)
+result_a = evaluate_postfix(expression_a)
+print("Result :", int(result_a))
+
+5. Given an array, find the Next greater element for every element.
+
+The Next greater Element for an element x is the first greater element 
+on the right side of x in array.
+
+Elements for which no greater element exist, 
+consider next greater element as -1.
+
+TEST CASES:
+------------------------
+case=t1
+input=4 5 2 25
+output=5 25 25 -1
+
+case=t2
+input=13 7 6 12
+output=-1 12 12 -1
+
+case=t3
+input=1 2 3 4 
+output=2 3 4 -1 
+
+PROGRAM:
+-------------------------------
+class Solution:
+    def nextGreaterElement(self, arr):
+        result = [-1] * len(arr)  # Initialize result array with -1
+        stack = []
+
+        for i in range(len(arr)):
+            while stack and arr[i] > arr[stack[-1]]:
+                index = stack.pop()
+                result[index] = arr[i]
+
+            stack.append(i)
+
+        return result
+
+
+arr = list(map(int, input().split()))
+
+s = Solution()
+result = s.nextGreaterElement(arr)
+
+for i in result:
+    print(i,end=" ")
+#print(result)
+
+6.  One day after storm Mina went to pick up mangoes in the garden with a basket.
+She began to pick up mangoes from the garden. And if she wants, she can throw away
+the last picked up mango from the basket. In this way, Mina kept picking up mangoes. 
+She brought you with her to keep track of the biggest size of mango in the basket at that time.
+At any moment Mina can ask you about the biggest size of mango. Your job is to help Mina.
+
+Since you are a good programmer, so you write a program by which you are easily
+able to answer the question of Mina. During picking up mangoes, 
+Mina can have 3 types of question/instruction for you.
+
+Type 1: Put an "x" size mango in the basket, which is picked up form garden.
+
+Type 2: Throw out last picked up mango.
+
+Type 3: Ask for the biggest mango size in the basket at that moment.
+
+3 types of operations (A, R, Q):
+A x (here x is picked up mango size), 
+R (Throw out last picked up mango from basket),
+Q (Find out the biggest size mango). Please use fast IO due to large size of input/ouptut.
+
+TEST CASES:
+---------------------------------
+case=t1
+input=7
+A
+10
+A
+5
+Q
+A
+100
+Q
+R
+Q
+output=10
+100
+10
+
+case=t1
+input=6
+A
+5
+Q
+R
+Q
+R
+R
+output=5
+Empty Basket, Can't remove mango
+Basket is Empty !!!
+Empty Basket, Can't remove mango
+Empty Basket, Can't remove mango
+
+PROGRAM:
+-----------------------------
+class MangoBasket:
+    def __init__(self):
+        self.basket = []
+        self.max_mango =0
+
+    def add_mango(self, size):
+        self.basket.append(size)
+        #print("Mango Basket:", self.basket)
+        self.max_mango = max(self.max_mango, size)
+        
+
+    def remove_last_mango(self):
+        if self.basket:
+            removed_mango = self.basket.pop()
+            if removed_mango == self.max_mango:
+                # Recalculate max_mango if the removed mango was the largest
+                self.max_mango = max(self.basket) if self.basket else "Basket is Empty !!!"
+
+    def get_max_mango(self):
+        return self.max_mango if self.basket else "Basket is Empty !!!"
+
+
+n = int(input())
+mango_basket = MangoBasket()
+for i in range(0, n):
+    ch = input()
+    #print(ch)
+    if ch == 'A':
+        s = int(input())
+        #print(s)
+        mango_basket.add_mango(s)
+    if ch == 'Q':
+        print(mango_basket.get_max_mango())
+        
+    if ch == 'R':
+        last=mango_basket.remove_last_mango()
+        if(last==None):
+            print("Empty Basket, Can't remove mango")
+        else:
+            print(last)
+
+7. You are given a series of daily price quotes for a stock and 
+you need to calculate span of stock’s price for each day. 
+The span Si of the stock’s price on current day i is defined as the 
+maximum number of consecutive days just before the current day[including the current day], 
+on which the price of the stock is less than or equal to its price on the current day.
+
+Input Format:
+--------------------------------------
+The first line contains N - the size of the array. 
+The second line contains N integers - the elements of the array, 
+ith element denotes the stock price on ith day.
+
+Output Format:
+---------------------------
+For each test case, print space-separated Stock Span Array, separated by new line.
+
+TEST CASES:
+-------------------------
+case=t1
+input=7
+100 80 60 70 60 75 85 
+output="1 1 1 2 1 4 6" 
+
+
+case=t1
+input=10
+0 7 3 6 6 9 18 0 16 0 
+output="1 2 1 2 3 6 7 1 2 1"
+
+PROGRAM:
+------------------------------
+def calculate_stock_span(arr):
+    n = len(arr)
+    stack = []
+    spans = [1] * n  # Initialize spans with 1 for each day
+
+    for i in range(n):
+        while stack and arr[i] >= arr[stack[-1]]:
+            stack.pop()
+
+        if not stack:
+            spans[i] = i + 1
+        else:
+            spans[i] = i - stack[-1]
+
+        stack.append(i)
+
+    return spans
+
+def main():
+    n = int(input())
+    prices = list(map(int, input().split()))
+    spans = calculate_stock_span(prices)
+    print(" ".join(map(str, spans)))
+
+if __name__ == "__main__":
+    main()
+
+8.  A water reservation system constructed in a city has several opening and closing gates.
+If any opening gates are not closed with a corresponding closing gate then the water will leak out
+of the system and there will be a threat to the life of people living in the city.
+Also, the closing gate cannot exist without the opening gate, so the system head checks 
+the design of the system and he has to ensure that the people are safe in the city.
+Write an algorithm to find whether people are safe or not.
+
+Input Format:
+--------------------------------
+Take the Input as String.
+
+Output Format:
+--------------------------------
+Print the number of gates if they are safe otherwise print -1.
+
+TEST CASES:
+--------------------------------
+case=t1
+Input=(())(
+Output=-1
+
+case=t2
+Input=()()()
+Output=3
+
+case=t3
+Input=()(())()
+Output=4
+
+case=t4
+Input=(()
+output=-1
+
+case=t5
+Input=(())()(()
+Output=-1
+
+PROGRAM:
+--------------------------------------
+class Stack:
+    def __init__(self):
+        self.size = 10
+        self.data = []
+        self.top = -1
+
+    def push(self, element):
+        self.data.append(element)
+        self.top += 1
+
+    def pop(self):
+        popped_element = None
+        if self.top > -1:
+            popped_element = self.data.pop()
+            self.top -= 1
+        return popped_element
+
+    def is_empty(self):
+        return self.top == -1
+
+    def is_full(self):
+        return self.top == self.size - 1
+
+class Solution:
+    
+    def __init__(self):
+        self.st = Stack()
+        self.count=0
+    def isBalanced(self, exp):
+        # write your method
+        for i in range(len(exp)):
+            if exp[i] == '(' :
+                self.st.push(exp[i])
+            elif exp[i] == ')' :
+                if self.st.is_empty() or not self.are_pair(self.st.pop(), exp[i]):
+                    return -1
+                else:
+                    self.count=self.count+1
+                
+        if(self.st.is_empty()):
+            return self.count
+        else:
+            return -1
+    @staticmethod
+    def are_pair(t, e):
+        return (t == '(' and e == ')') 
+
+str=input()
+s=Solution()
+print(s.isBalanced(str))
+
+
+QUEUES:
+---------------------
+1. Write a program to create a Queue and it's operations which is given below. 
+Name your class as Queue. In Queue class use Integer array to implement Queue.
+
+Operations:
+
+1. enque accepts an integer and adds to the Queue
+2. deque remove the element from Queue and prints the value which is removed.
+3. peek it returns the latest element from the queue
+4. isEmpty returns true if Queue is empty, and false otherwise
+5. isFull returns true if Queue is Full, and false otherwise
+
+TEST CASES:
+----------------------------
+case=t1
+Input=6
+5
+1 1
+1 2
+4
+5
+2
+3
+Output=enque:1
+enque:2
+isEmpty:false
+isFull:false
+deque:1
+peek:2
+
+case=t2
+Input=9
+5
+1 1
+1 2
+1 4
+3
+2
+1 6
+1 7
+4
+5
+Output=enque:1
+enque:2
+enque:4
+peek:1
+deque:1
+enque:6
+enque:7
+isEmpty:false
+isFull:false
+
+PROGRAM:
+---------------------------------
+class Queue:
+    def __init__(self,size):
+        self.size=size
+        self.data = []
+    def enque(self,element):
+        self.data.append(element)
+    
+    def deque(self):
+        if(len(self.data) > 0):
+            return(self.data.pop(0))
+        return None
+    def isEmpty(self):
+        if(len(self.data)<1):
+            return "true"
+        else:
+            return "false"
+    def isFull(self):
+        if(len(self.data)<=size):
+            return "false"
+        else:
+            return "true"
+    def peek(self):
+        return(self.data[0])
+
+
+if __name__ == "__main__": 
+    
+    test_cases=int(input())
+    size=int(input()) # size of Stack
+    q=Queue(size) # creating new stack object
+    
+    while(test_cases>0): 
+        instruction=input().split()
+        val=0
+        if len(instruction)>1:
+            val=int(instruction[1])
+        instruction=int(instruction[0])
+        
+
+        if(instruction==1):  
+            print("Enque:",val)
+            q.enque(val)
+
+        elif (instruction==2):
+            print("Deque:", q.deque())
+
+        elif (instruction==3):            
+            print("peek: ",q.peek())
+
+        elif(instruction==4):
+            print("isEmpty:", q.isEmpty())
+
+        elif(instruction==5):
+            print("isFull:", q.isFull())
+        test_cases=test_cases-1 
+
+2. Write a Python Program to reverse a given Queue.
+
+TEST CASES:
+------------------------------------
+case=t1
+input=10,20,30,40,50,60,70
+output=
+"Original Queue: ['10', '20', '30', '40', '50', '60', '70']
+Reversed Queue: ['70', '60', '50', '40', '30', '20', '10']"
+
+
+case=t2
+input=23,56,18,9,41,35
+output="Original Queue: ['23', '56', '18', '9', '41', '35']
+Reversed Queue: ['35', '41', '9', '18', '56', '23']"
+
+PROGRAM:
+----------------------------
+from collections import deque
+
+def reverse_queue(queue):
+    Stack = []
+ 
+    while (queue):
+        Stack.append(queue[0])
+        queue.popleft()
+ 
+    while (len(Stack) != 0):
+        queue.append(Stack[-1])
+        Stack.pop()
+
+# Example usage:
+original_queue = deque(input().split(","))
+#originalqueue = deque([10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+
+print("Original Queue:", list(original_queue))
+reverse_queue(original_queue)
+print("Reversed Queue:", list(original_queue))
+
+3. In this question you must first implement a queue using two stacks.
+Then process queries, where each query is one of the following 3 types:
+
+1. `1 x`: Enqueue element x into the end of the queue.
+2. `2`: Dequeue the element at the front of the queue.
+3. `3`: Print the element at the front of the queue.
+
+TEST CASES:
+----------------------------
+case=t1
+Input=10
+1 42
+2
+1 14
+3
+1 28
+3
+1 60
+1 78
+2
+2
+Output=14
+14
+
+case=t2
+Input=10
+1 76 
+1 33 
+2 0 
+1 23 
+1 97 
+1 21 
+3 0 
+3 0 
+1 74 
+3 0 
+
+OUTPUT=
+33 33 33 
+
+PROGRAM:
+---------------------------------
+class Solution:
+    def __init__(self):
+        self.s1 = []
+        self.s2 = []
+    def implementQueue(self, Query):
+        a=[]
+        # write your method here
+        for q in Query:
+            #print(q)
+            if int(q[0])==1:
+                self.enQueue(int(q[1]))
+            elif int(q[0])==2:
+                self.deQueue()
+            elif int(q[0])==3:
+                a.append(self.peek())
+        return(a)
+    def enQueue(self, x):
+         
+        # Move all elements from s1 to s2 
+        while len(self.s1) != 0: 
+            self.s2.append(self.s1[-1]) 
+            self.s1.pop()
+ 
+        # Push item into self.s1 
+        self.s1.append(x) 
+ 
+        # Push everything back to s1 
+        while len(self.s2) != 0: 
+            self.s1.append(self.s2[-1]) 
+            self.s2.pop()
+ 
+    # Dequeue an item from the queue 
+    def deQueue(self):
+         
+            # if first stack is empty 
+        if len(self.s1) == 0: 
+            return -1;
+     
+        # Return top of self.s1 
+        x = self.s1[-1] 
+        self.s1.pop() 
+        return x
+    
+    def peek(self):
+         
+            # if first stack is empty 
+        if len(self.s1) == 0: 
+            return -1;
+     
+        # Return top of self.s1 
+        x = self.s1[-1] 
+        return x
+
+n=int(input())
+query=[]
+i=1
+while(i<=n):
+    query.append(input().split())
+    i=i+1 
+
+s=Solution()
+print(s.implementQueue(query))
+#print(query)
+
+LINKEDLIST:
+---------------------------------
+1. Create a LinkedList with methods given below.
+
+Methods:
+
+insert To insert the value at last in the linked list.
+remove To remove the element from LinkedList.
+Search To search the element in LinkedList whether the value is present or not (it is boolean method)
+insertIndex: To insert the element at particular index.
+displayTo display the entire List.
+
+TEST CASES:
+---------------------------
+case=t1
+Input=5
+1
+1
+1
+1
+1
+1
+3
+1
+5
+Output=
+Insert: 1
+Insert: 1
+Insert: 1
+Search for 1. Found: true
+Display:
+1 1 1 
+
+case=t2
+Input=7
+1
+5
+1
+6
+1
+3
+3
+6
+5
+4
+2
+4
+5
+output=Insert:  {5}
+Insert:  {6}
+Insert:  {3}
+Search for  6 found:  true
+Display:
+5 6 3 
+Insert 4 at index 2
+Display:
+5 6 4 3
+
+
+case=t3
+Input=6
+1
+5
+1
+2
+1
+6
+2
+2
+5
+2
+7
+Output=Insert:  {5}
+Insert:  {2}
+Insert:  {6}
+Delete:  2
+Display:
+5 6 
+Element not in the list, can't delete
+
+
+PROGRAM:
+--------------------------------
+class Node:
+    def __init__(self,data=None):
+        self.data=data
+        self.next=None
+
+### write LinkedList class below this line ##
+
+class LinkedList: 
+    # Function to initialize head 
+    def __init__(self): 
+        self.head = None
+    def insert(self,data) :
+        tempNode = Node(data)
+        current = self.head
+
+        # If the Linked List is empty, then make the temp node as head
+        if self.head is None:
+            self.head = tempNode
+            return
+
+        # Traverse the whole linked list till current points to the last node
+        while current.next is not None:
+            current = current.next
+
+        # Update the next pointer of the last node to point to the temp node
+        current.next = tempNode
+
+    def remove(self,key):
+        temp = self.head
+
+        # If the node to be deleted is the first node.
+        if temp is not None and temp.data == key:
+            self.head = temp.next
+            return True
+
+        # Search for the element to be deleted and maintain prev_node of the node
+        # to be deleted.
+        prev = None
+        while temp is not None and temp.data != key:
+            prev = temp
+            temp = temp.next
+
+        # If linked list doesn't contain the key
+        if temp is None:
+            return False
+
+        # Change next of prev_node to point to next of the node to be deleted.
+        prev.next = temp.next  
+        return True
+        
+    def Search(self,data):
+        current = self.head
+        while current is not None:
+            if current.data == data:
+                return "true"
+            current = current.next
+        return "false"
+    
+    def insertIndex(self,idx,data) :
+        tempNode = Node(data)
+        current = self.head
+        prev = None
+        p = 0
+        while p != idx and current is not None:
+            prev = current
+            current = current.next
+            p += 1
+        tempNode.next = current
+        if prev is not None:
+            prev.next = tempNode
+        else:
+            self.head = tempNode   
+        
+    def display(self):
+        current = self.head
+       
+        while current is not None:
+            print(current.data,end=" ")
+            current = current.next
+        
+if __name__ == "__main__": 
+    
+    myList=LinkedList()
+    q=int(input())
+     # current instruction
+      
+        ####
+        # 1 means insertion
+        # 2 means remove value
+        # 3 means search value
+        # 4 means insert at particular index
+        # 5 means display entire list
+        # 6 means exit
+        ####
+    while(q>0):
+        instruction=int(input())
+        if (instruction==1): 
+            val=int(input())
+            print('Insert: ',{val})
+            myList.insert(val)
+        elif (instruction==2):
+            val=int(input())
+            if(myList.remove(val)):
+                print('Delete: ',val)
+            else:
+                print('Element not in the list, can\'t delete')
+        elif (instruction==3):
+            val=int(input())
+            print('Search for ',val,end=" ")
+            print("found: ",(myList.Search(val)))
+        elif (instruction==4):
+            index=int(input())
+            val=int(input())
+            print('Insert {} at index {}'.format(val,index))
+            myList.insertIndex(index,val)
+        elif (instruction==5):
+            print('Display:')
+            myList.display()
+        else:
+            print("Invalid Option!!!")
+        print()
+        q=q-1
+       
+2. Given the pointer to the head node of a linked list, an integer to add to the list and the position at which the integer must be inserted.
+Create a new node with the given integer, insert this node at the desired position and return the head node.
+A position of 0 indicates head, a position of 1 indicates one node away from the head and so on.
+
+Note: The head pointer given may be null meaning that the initial list is empty.
+
+TEST CASES:
+---------------------------------
+case=t1
+input=3
+1
+2
+3
+2
+4
+
+Output=Orginal Linked list: 1->2->3
+Final Linked list: 1->2->4->3
+
+case=t2
+input=2
+3
+6
+3
+9
+output=Orginal Linked list: 3-> 6->
+Final Linked list: 3-> 6-> 9-> 
+
+case=t3
+input=3
+2
+4
+6
+1
+1
+output=Orginal Linked list: 2-> 4-> 6-> 
+Final Linked list: 2-> 1-> 4-> 6-> 
+
+case=t4
+input=2
+4
+6
+0
+2
+output=Orginal Linked list: 4-> 6-> 
+Final Linked list: 2-> 4-> 6-> 
+
+PROGRAM:
+--------------------------------
+class LLNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+        
+
+class Solution:
+    def __init__(self): 
+        self.head = None
+        
+    def display(self,head):
+        current = self.head
+        while current is not None:
+            print(current.val, end="-> ")
+            current = current.next
+            
+    def insert(self, data):
+        tempNode = LLNode(data)
+        current = self.head
+
+        # If the Linked List is empty, then make the temp node as head
+        if self.head is None:
+            self.head = tempNode
+            return self.head
+
+        # Traverse the whole linked list till current points to the last node
+        while current.next is not None:
+            current = current.next
+
+        # Update the next pointer of the last node to point to the temp node
+        current.next = tempNode
+    
+    def insertNodeAtPosition(self,head,data, position):
+        # write your method here
+        tempNode = LLNode(data)
+        current = self.head
+        prev = None
+        p = 0
+        if position==0:
+            self.head = tempNode
+            tempNode.next=current
+            
+        else:
+            while p != position and current is not None:
+                prev = current
+                current = current.next
+                p += 1
+            tempNode.next = current
+            if prev is not None:
+                prev.next = tempNode
+        
+        print("Final Linked list:",end=" ")
+        self.display(head)
+        
+n=int(input())
+s=Solution()
+
+for i in range(n):
+    data=int(input())
+    head=s.insert(data)
+print("Orginal Linked list:",end=" ")
+s.display(head)
+p=int(input())
+val=int(input())
+head=s.insertNodeAtPosition(s.head,val,p)
+
+INTRODUCTION TO TREES:
+---------------------------
+1. Preorder Traversal
+2. Inorder Traversal
+3. Post Traversal
+4. Deleting from a BST
+5. Given a binary tree, find the largest value in each level.
+
+TEST CASES:
+-----------------------
+case=t1
+Input=1 2 3
+Output= 1 3
+
+case=t2
+Input=4 9 2 3 5 7
+Output= 4 9 7
+
+PROGRAM:
+---------------------------------
+
+GRAPHS:
+----------------------
+1. Given the adjacency list and number of vertices and edges of a graph,
+the task is to represent the adjacency list for a directed graph. 
+Write a python program to prin the adjacency list for a directed graph.
+
+TEST CASES:
+------------------------
+case=t1
+Input=3
+[[0, 1], [1, 2], [2, 0]]
+
+Output=0 -> 1
+1 -> 2
+2 -> 0
+
+case=t2
+Input=4 
+[[0, 1], [1, 2],[1, 3], [2, 3], [3, 0]]
+
+Output=0 -> 1
+1 -> 2  3
+2 -> 3
+3 -> 0
+ 
+PROGRAM:
+-----------------------
+def addEdge(adj, u, v):
+    adj[u].append(v)
+
+# Function to print adjacency list
+def adjacencylist(adj, V):
+    for i in range(0, V):
+        print(i, "-> ", end="")
+        for x in adj[i]:
+            print(x, " ", end="")
+        print()
+
+# Function to initialize the adjacency list of the given graph
+def initGraph(V, edges, noOfEdges):
+    adj = [[] for k in range(V)]
+
+    # Traverse edges array and make edges
+    for i in range(0, noOfEdges):
+        # Function call to make an edge
+        addEdge(adj, edges[i][0], edges[i][1])
+
+    # Function Call to print adjacency list
+    adjacencylist(adj, V)
+
+# Driver Code
+import ast
+
+V = int(input())
+edges = ast.literal_eval(input())
+noOfEdges = len(edges)
+initGraph(V, edges, noOfEdges)
+
+ 
+ 2. Breadth-first search (BFS) traversal is a technique for visiting all nodes in a given network. 
+This traversal algorithm selects a node and visits all nearby nodes in order. 
+
+This algorithm uses a queue as a data structure as an additional data structure to store nodes for further processing. 
+Queue size is the maximum total number of vertices in the graph.
+
+TEST CASES:
+----------------------------
+case=t1
+input={'A': ['B', 'D'],
+'B': ['A', 'C'],
+'C': ['B'],
+'D': ['A', 'E', 'F'],
+'E': ['D'],
+'F': ['D']
+}
+
+Output=BFS traversal starting from vertex 'A':A B D E F C
+
+PROGRAM:
+------------------------------
+from collections import deque
+import ast
+
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+
+    while queue:
+        vertex = queue.popleft()
+        if vertex not in visited:
+            print(vertex, end=' ')
+            visited.add(vertex)
+            queue.extend(v for v in graph[vertex] if v not in visited)
+
+# Example usage
+try:
+    user_input=input()
+    user_dict = ast.literal_eval(user_input)
+    if not isinstance(user_dict, dict):
+        raise ValueError("Input is not a dictionary")
+except (SyntaxError, ValueError) as e:
+    print("Error: {}".format(e))
+    user_dict = {}
+print("BFS traversal starting from vertex 'A':")
+bfs(graph, 'A')
+
+
+3. Given the adjacency list and number of vertices and edges of a graph,
+the task is to represent the adjacency list for a directed graph. 
+Write a python program to prin the adjacency list for a directed graph.
+
+TESTCASES:
+-------------------------
+case=t1
+Input=3
+[[0, 1], [1, 2], [2, 0]]
+
+Output=0 -> 1
+1 -> 2
+2 -> 0
+
+case=t2
+Input=4 
+[[0, 1], [1, 2],[1, 3], [2, 3], [3, 0]]
+
+Output=0 -> 1
+1 -> 2  3
+2 -> 3
+3 -> 0
+ 
+PROGRAM:
+-------------------------------
